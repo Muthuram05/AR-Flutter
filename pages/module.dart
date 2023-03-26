@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../assets_page/chicken_ar.dart';
-import '../assets_page/web_ar.dart';
-class m_page extends StatelessWidget {
-  const m_page({Key? key}) : super(key: key);
+import '../assets_page/mahal.dart';
+import '../assets_page/web_glb.dart';
+class module extends StatelessWidget {
+  const module({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

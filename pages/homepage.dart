@@ -1,108 +1,5 @@
  import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import '../assets_page/chicken_ar.dart';
-import 'game_page.dart';
-import 'guide.dart';
-import 'guide2.dart';
-import '../pages/modle_page.dart';
-import '../pages/transulation_page.dart';
-// class homepage extends StatefulWidget {
-//   const homepage({Key? key}) : super(key: key);
-//
-//   @override
-//   State<homepage> createState() => _homepageState();
-// }
-//
-// class _homepageState extends State<homepage> {
-//   int _selectedIndex = 0;
-//   List<IconData> data= const [
-//     Icons.ac_unit_sharp,
-//     Icons.star,
-//     Icons.person,
-//   ];
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//
-//       bottomNavigationBar:  Padding(
-//         padding:  EdgeInsets.all(20),
-//         child: Material(
-//           elevation: 10,
-//           borderRadius: BorderRadius.circular(20),
-//           color: Colors.deepOrange,
-//           child: Container(
-//             height: 70,
-//             width: double.infinity,
-//             child: ListView.builder(
-//                 itemCount: 3,
-//                 padding: EdgeInsets.symmetric(horizontal: 10),
-//                 itemBuilder:(ctx,i)=>Padding(
-//                     padding:EdgeInsets.symmetric(horizontal: 40),
-//                     child:GestureDetector
-//                       (onTap:(){ setState(() {
-//                   _selectedIndex = i;
-//                 });},
-//                     child: AnimatedContainer(
-//                       duration: Duration(
-//                         milliseconds: 250
-//                       ),
-//                       width: 35,
-//                       // decoration: BoxDecoration(
-//                       //
-//                       //   gradient: i == _selectedIndex ? LinearGradient(
-//                       //     colors: [Color(0xffFD841F),
-//                       //     Color(0xffE14D2A),
-//                       //     ],
-//                       //     begin: Alignment.topCenter,
-//                       //     end: Alignment.bottomCenter,
-//                       //   ):null,
-//                       // ),
-//                       child: Card(
-//
-//                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
-//                           color: i == _selectedIndex ?Colors.white:Colors.deepOrange,
-//                           child: SizedBox(
-//                               width: 30,
-//                               child: Icon(data[i],size: 35,color: i == _selectedIndex ?Colors.deepOrange:Colors.white,))),
-//                     ),)
-//                 ),
-//               scrollDirection: Axis.horizontal,
-//             )
-//           ),
-//           ),
-//         ),
-//
-//
-//       // BottomNavigationBar(
-//       //     currentIndex: _currentIndex,
-//       //     onTap: (int newIndex){
-//       //       setState(() {
-//       //         _currentIndex = newIndex;
-//       //       });
-//       //
-//       //     },
-//       //     items: [
-//       //       BottomNavigationBarItem(
-//       //         label: 'Camera',
-//       //         icon:Icon(Icons.camera_alt_outlined),
-//       //       ),
-//       //       BottomNavigationBarItem(
-//       //         label: 'Game',
-//       //         icon:Icon(Icons.star),
-//       //       ),
-//       //       BottomNavigationBarItem(
-//       //         label: 'Profile',
-//       //         icon:Icon(Icons.person),
-//       //       ),
-//       //
-//       //     ],
-//       //   ),
-//     );
-//   }
-// }
-
-//emit
-
+import 'pages.dart';
 
  class homepage extends StatelessWidget {
     const homepage({Key? key}) : super(key: key);
@@ -210,7 +107,7 @@ import '../pages/transulation_page.dart';
                              onTap: (){
                                Navigator.push(
                                context,
-                               MaterialPageRoute(builder: (context) =>  m_page()),);
+                               MaterialPageRoute(builder: (context) =>  module()),);
                                },
                              child: SizedBox(
                                width: 120,
@@ -260,7 +157,7 @@ import '../pages/transulation_page.dart';
                            onTap: (){
                              Navigator.push(
                                context,
-                               MaterialPageRoute(builder: (context) =>gamepage()),);
+                               MaterialPageRoute(builder: (context) =>game()),);
                            },
                            child: SizedBox(
                              width: 114,
@@ -284,7 +181,7 @@ import '../pages/transulation_page.dart';
                  onTap: (){
                    Navigator.push(
                      context,
-                     MaterialPageRoute(builder: (context) => t_page()),);
+                     MaterialPageRoute(builder: (context) => translation()),);
                  },
                  child: SizedBox(
                    width: 250,

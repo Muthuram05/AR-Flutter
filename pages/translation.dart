@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:translator/translator.dart';
-class t_page extends StatefulWidget {
-  const t_page({Key? key}) : super(key: key);
+class translation extends StatefulWidget {
+  const translation({Key? key}) : super(key: key);
 
   @override
-  State<t_page> createState() => _t_pageState();
+  State<translation> createState() => _translationState();
 }
 
-class _t_pageState extends State<t_page> {
+class _translationState extends State<translation> {
   bool textScanning = false;
   XFile ? imageFile;
   String scannedText = "";

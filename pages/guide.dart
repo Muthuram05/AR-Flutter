@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ffi';
 import 'package:ar_flutter_plugin/ar_flutter_plugin.dart';
 import 'package:ar_flutter_plugin/managers/ar_anchor_manager.dart';
 import 'package:ar_flutter_plugin/managers/ar_location_manager.dart';
@@ -8,31 +9,26 @@ import 'package:ar_flutter_plugin/models/ar_node.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
+
 class guide extends StatefulWidget {
   const guide({Key? key}) : super(key: key);
-
   @override
   State<guide> createState() => _guideState();
 }
 
 class _guideState extends State<guide> {
-   getLocation() async{
-    print('object');
-
-  }
-  String lon ="0";
+  String lon = "0";
   String lat ="0";
   late ARSessionManager arSessionManager;
   late ARObjectManager arObjectManager;
-
   //String localObjectReference;
   ARNode? localObjectNode;
-
   //String webObjectReference;
   ARNode? webObjectNode;
-
    @override
    void initState() {
+     Geolocator.checkPermission();
+     Geolocator.requestPermission();
       fun();
      super.initState();
    }
@@ -58,8 +54,9 @@ class _guideState extends State<guide> {
               children: [
                     const Text("Current"),
                     Text('Longitude: $lon '),
-                    Text('Altitude: $lat '),
-
+                    Text('latitude : $lat '),
+                if (lon == "77.7129413")
+                  Text("worked"),
               ],
             ),
           ],
@@ -67,9 +64,8 @@ class _guideState extends State<guide> {
       ),
     );
   }
+
   fun() async{
-    Geolocator.checkPermission();
-    Geolocator.requestPermission();
     Timer.periodic(Duration(seconds: 1), (timer) async {
       DateTime timenow = DateTime.now();  //get current date and time
       Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.low);
@@ -90,7 +86,6 @@ class _guideState extends State<guide> {
       ARLocationManager arLocationManager) {
     this.arSessionManager = arSessionManager;
     this.arObjectManager = arObjectManager;
-
     this.arSessionManager.onInitialize(
       showFeaturePoints: false,
       showPlanes: true,

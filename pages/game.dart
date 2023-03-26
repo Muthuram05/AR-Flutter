@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:sharma/vjk7/startGame.dart';
+import 'package:sharma/pages/game/startGame.dart';
 
-import 'CreatePage.dart';
+import 'game/CreatePage.dart';
 
 
 
-class gamepage extends StatefulWidget {
-  const gamepage({Key? key}) : super(key: key);
+class game extends StatefulWidget {
+  const game({Key? key}) : super(key: key);
 
   @override
-  State<gamepage> createState() => _gamepageState();
+  State<game> createState() => _gameState();
 }
 
-class _gamepageState extends State<gamepage> {
+class _gameState extends State<game> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
