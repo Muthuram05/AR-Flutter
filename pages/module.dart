@@ -39,8 +39,8 @@ class module extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Image.asset("lib/assets/image/hen.png"),
-                          const Text("Hen", style: TextStyle(
+                          Image.asset("lib/assets/image/download-removebg-preview.png"),
+                          const Text("Taj Mahal", style: TextStyle(
                             fontFamily: 'MontserratAlternates',
                             color: Colors.white,
                             fontSize: 25,

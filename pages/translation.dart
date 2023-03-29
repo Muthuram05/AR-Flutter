@@ -1,12 +1,11 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:translator/translator.dart';
+
 class translation extends StatefulWidget {
   const translation({Key? key}) : super(key: key);
-
   @override
   State<translation> createState() => _translationState();
 }

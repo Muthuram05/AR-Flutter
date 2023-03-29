@@ -67,29 +67,19 @@ class _LocalAndWebObjectsViewState extends State<LocalAndWebObjectsView> {
             ),
             Row(
               children: [
-
-
-                // Expanded(
-                //   child: ElevatedButton(
-                //       onPressed: (){
-                //         setState(() {
-                //           x = 10;
-                //         });
-                //         onLocalObjectButtonPressed();
-                //       },
-                //       child: const Text("x=10")),
-                // ),
                 Card(
                   color: Color(0xffFFB319),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: InkWell(
-                    onTap:  (){setState(() {
+                    onTap:  (){
+                      setState(() {
                       x = 0;
                     });
                     arObjectManager.removeNode(localObjectNode!);
-                    localObjectNode = null;},
+                    localObjectNode = null;
+                    },
                     child: SizedBox(
                         height: 40,
                         width: 80,
@@ -103,7 +93,8 @@ class _LocalAndWebObjectsViewState extends State<LocalAndWebObjectsView> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: InkWell(
-                    onTap:  (){setState(() {
+                    onTap:  (){
+                      setState(() {
                       x = 10;
                     });
                     onLocalObjectButtonPressed();},
@@ -114,51 +105,7 @@ class _LocalAndWebObjectsViewState extends State<LocalAndWebObjectsView> {
                     ),
                   ),
                 ),
-                // Expanded(
-                //   child: ElevatedButton(
-                //       onPressed: (){
-                //         setState(() {
-                //           x = 0;
-                //         });
-                //         arObjectManager.removeNode(localObjectNode!);
-                //         localObjectNode = null;
-                //       },
-                //       child:  Text("x=0")),
-                // ),
-                Expanded(  child: ElevatedButton(
-                  onPressed: (){
-                    showDialog(context: context,builder: (_) => AlertDialog(
-                      backgroundColor: Color(0xff76fa77),
-                      alignment:Alignment(0.5,0.5) ,
 
-
-                      content: Card(
-                        // color: Color(0xff76fa77),
-                          child: SizedBox(
-                            height: 180,
-                            width: 90,
-
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(40, 10, 40, 10),
-                                  child: TextField(
-                                    decoration: InputDecoration(
-                                      labelText: 'Clue',
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(height: 10,),
-                                ElevatedButton(onPressed: (){
-                                  Navigator.pop(context);
-                                }, child: Text("Place clue")),
-                              ],
-                            ),
-                          )
-                      ),
-                    ) );},
-                  child:Icon(Icons.add),
-                )),
                 Text("$x"),
               ],
             ),
@@ -192,7 +139,7 @@ class _LocalAndWebObjectsViewState extends State<LocalAndWebObjectsView> {
     // } else {
     var newNode = ARNode(
         type: NodeType.localGLTF2,
-        uri: "lib/assets/mahal/untitled.gltf",
+        uri: "lib/assets/burj/burj.gltf",
         scale: Vector3(0.2, 0.2, 0.2),
         position: Vector3(0,0,0),
         rotation: Vector4(1.0, 0.0, 0.0, 0.0));

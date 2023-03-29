@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ffi';
 import 'package:ar_flutter_plugin/ar_flutter_plugin.dart';
 import 'package:ar_flutter_plugin/managers/ar_anchor_manager.dart';
 import 'package:ar_flutter_plugin/managers/ar_location_manager.dart';
@@ -46,7 +45,7 @@ class _guideState extends State<guide> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(22),
                 child: ARView(
-                  onARViewCreated: onARViewCreated,
+                  onARViewCreated: empty,
                 ),
               ),
             ),
@@ -78,6 +77,12 @@ class _guideState extends State<guide> {
       //mytimer.cancel() //to terminate this timer
     });
   }
+  void empty(
+      ARSessionManager arSessionManager,
+      ARObjectManager arObjectManager,
+      ARAnchorManager arAnchorManager,
+      ARLocationManager arLocationManager){
+  }
 
   void onARViewCreated(
       ARSessionManager arSessionManager,
@@ -89,7 +94,7 @@ class _guideState extends State<guide> {
     this.arSessionManager.onInitialize(
       showFeaturePoints: false,
       showPlanes: true,
-      // customPlaneTexturePath: "assets/triangle.png",
+      customPlaneTexturePath: "assets/triangle.png",
       showWorldOrigin: true,
       handleTaps: false,
     );
