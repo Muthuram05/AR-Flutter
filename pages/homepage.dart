@@ -1,4 +1,5 @@
  import 'package:flutter/material.dart';
+import 'map.dart';
 import 'pages.dart';
 
  class homepage extends StatelessWidget {
@@ -193,7 +194,11 @@ import 'pages.dart';
                  ),
                ),
              ),
-
+             TextButton(onPressed: (){
+               Navigator.push(
+                 context,
+                 MaterialPageRoute(builder: (context) => MapSample()),);
+             }, child: Text("Text"))
            ],
          )
          ),

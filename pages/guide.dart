@@ -24,13 +24,28 @@ class _guideState extends State<guide> {
   ARNode? localObjectNode;
   //String webObjectReference;
   ARNode? webObjectNode;
-   @override
+
+  @override
    void initState() {
-     Geolocator.checkPermission();
-     Geolocator.requestPermission();
-      fun();
-     super.initState();
-   }
+    super.initState();
+    Geolocator.checkPermission();
+    Geolocator.requestPermission();
+    Timer.periodic(Duration(seconds: 1), (timer) async {
+      DateTime timenow = DateTime.now(); //get current date and time
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.low);
+
+      //mytimer.cancel() //to terminate this timer
+        if (!mounted) {
+        timer.cancel();
+        } else {
+        setState(() {
+    lon = position.longitude.toString();
+    lat = position.latitude.toString();
+    });
+        }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +60,7 @@ class _guideState extends State<guide> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(22),
                 child: ARView(
-                  onARViewCreated: empty,
+                  onARViewCreated: onARViewCreated,
                 ),
               ),
             ),
@@ -62,20 +77,6 @@ class _guideState extends State<guide> {
         ),
       ),
     );
-  }
-
-  fun() async{
-    Timer.periodic(Duration(seconds: 1), (timer) async {
-      DateTime timenow = DateTime.now();  //get current date and time
-      Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.low);
-      print(position.latitude);
-      print(position.longitude);
-      setState(() {
-        lon = position.longitude.toString();
-        lat = position.latitude.toString();
-      });
-      //mytimer.cancel() //to terminate this timer
-    });
   }
   void empty(
       ARSessionManager arSessionManager,
