@@ -131,7 +131,7 @@ class _translationState extends State<translation> {
                  ],
                ),
              ),
-              if(textScanning )
+              if(textScanning)
                 CircularProgressIndicator(),
               if(!textScanning && imageFile == null)
               Card(

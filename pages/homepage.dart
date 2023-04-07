@@ -117,7 +117,7 @@ import 'pages.dart';
                              onTap: (){
                                Navigator.push(
                                  context,
-                                 MaterialPageRoute(builder: (context) =>  guide()),);
+                                 MaterialPageRoute(builder: (context) =>  MapSample()),);
                              },
                              child: SizedBox(
                                width: 120,
@@ -151,7 +151,6 @@ import 'pages.dart';
                              child:Center(
                                child: Image.asset("lib/assets/image/gamepad.png"),
                              ),
-
                            ),
                          ),
                        ),
@@ -175,25 +174,8 @@ import 'pages.dart';
                    child:Center(
                      child:Image.asset("lib/assets/image/language.png"),
                    ),
-
                  ),
                ),
-             ),
-             TextButton(
-                 onPressed: (){
-                   Navigator.push(
-                     context,
-                     MaterialPageRoute(builder: (context) => MapSample()),);
-                 },
-                 child: Text("Text")
-             ),
-             TextButton(
-                 onPressed: (){
-                   Navigator.push(
-                     context,
-                     MaterialPageRoute(builder: (context) => text()),);
-                 },
-                 child: Text("Text")
              ),
            ],
          )

@@ -9,19 +9,18 @@ class text extends StatelessWidget {
   final GlobalKey _key = GlobalKey();
   text({Key? key}) : super(key: key);
   void _capture() async{
-    print("one1");
     RenderRepaintBoundary boundary = _key.currentContext!.findRenderObject() as RenderRepaintBoundary;
     if(boundary.debugNeedsPaint){
       Timer(Duration(seconds: 1) ,() =>_capture());
       return null;
     }
-    print('two');
     ui.Image image = await boundary.toImage();
     ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
     if(byteData != null){
       Uint8List pngint = byteData.buffer.asUint8List();
       final saveImage = await ImageGallerySaver.saveImage(
           Uint8List.fromList(pngint),quality: 90,name: 'scrennshot-${DateTime.now()}.jpg' );
+
     }
 
   }

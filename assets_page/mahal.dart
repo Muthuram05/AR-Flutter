@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:typed_data';
+import 'dart:ui' as ui;
 import 'package:ar_flutter_plugin/ar_flutter_plugin.dart';
 import 'package:ar_flutter_plugin/datatypes/node_types.dart';
 import 'package:ar_flutter_plugin/managers/ar_anchor_manager.dart';
@@ -7,6 +9,7 @@ import 'package:ar_flutter_plugin/managers/ar_object_manager.dart';
 import 'package:ar_flutter_plugin/managers/ar_session_manager.dart';
 import 'package:ar_flutter_plugin/models/ar_node.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:vector_math/vector_math_64.dart';
@@ -35,6 +38,7 @@ class LocalAndWebObjectsView extends StatefulWidget {
 }
 
 class _LocalAndWebObjectsViewState extends State<LocalAndWebObjectsView> {
+  final GlobalKey _key = GlobalKey();
   late ARSessionManager arSessionManager;
   late ARObjectManager arObjectManager;
 
@@ -51,7 +55,20 @@ class _LocalAndWebObjectsViewState extends State<LocalAndWebObjectsView> {
     arSessionManager.dispose();
     super.dispose();
   }
-
+  void _capture() async{
+    RenderRepaintBoundary boundary = _key.currentContext!.findRenderObject() as RenderRepaintBoundary;
+    if(boundary.debugNeedsPaint){
+      Timer(Duration(seconds: 1) ,() =>_capture());
+      return null;
+    }
+    ui.Image image = await boundary.toImage();
+    ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    if(byteData != null){
+      Uint8List pngint = byteData.buffer.asUint8List();
+      final saveImage = await ImageGallerySaver.saveImage(
+          Uint8List.fromList(pngint),quality: 90,name: 'scrennshot-${DateTime.now()}.jpg' );
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -71,9 +88,12 @@ class _LocalAndWebObjectsViewState extends State<LocalAndWebObjectsView> {
                   // ),
                   height: MediaQuery.of(context).size.height * 1,
                   width: double.infinity,
-                        child: ClipRRect(
-                          child: ARView(
-                            onARViewCreated: onARViewCreated,
+                        child: RepaintBoundary(
+                          key: _key,
+                          child: ClipRRect(
+                            child: ARView(
+                              onARViewCreated: onARViewCreated,
+                            ),
                           ),
                         ),
                 ),
@@ -119,7 +139,7 @@ class _LocalAndWebObjectsViewState extends State<LocalAndWebObjectsView> {
                     bottom: 5,
                     child: InkWell(
                       onTap: () async{
-
+                        _capture();
                       },
                       child: SizedBox(
                         width: 80,
