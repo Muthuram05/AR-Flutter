@@ -1,5 +1,5 @@
  import 'package:flutter/material.dart';
-import '../testing/text.dart';
+import 'game/start.dart';
 import 'map.dart';
 import 'pages.dart';
 

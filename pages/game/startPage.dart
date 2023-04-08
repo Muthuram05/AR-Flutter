@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'create.dart';
+import 'start.dart';
 
-class CreatePage extends StatefulWidget {
-  const CreatePage({Key? key}) : super(key: key);
+class startPage extends StatefulWidget {
+  const startPage({Key? key}) : super(key: key);
 
   @override
-  State<CreatePage> createState() => _CreatePageState();
+  State<startPage> createState() => _startPageState();
 }
 
-class _CreatePageState extends State<CreatePage> {
+class _startPageState extends State<startPage> {
   final formKey = GlobalKey<FormState>();
   final registerController = TextEditingController();
   @override
@@ -16,7 +16,7 @@ class _CreatePageState extends State<CreatePage> {
     return Scaffold(
       body: Center(
         child:
-            Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+        Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           Column(
             children: [
               Padding(
@@ -40,8 +40,8 @@ class _CreatePageState extends State<CreatePage> {
                     final isValid = formKey.currentState!.validate();
                     if(!isValid) return;
                     Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => create()));
-                    },
+                        MaterialPageRoute(builder: (context) => start()));
+                  },
                   child: const Text("next")),
             ],
           ),

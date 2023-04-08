@@ -1,6 +1,4 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
@@ -13,38 +11,31 @@ class MapSample extends StatefulWidget {
 }
 
 class MapSampleState extends State<MapSample> {
-  final Completer<GoogleMapController> _controller = Completer();
 
-  static const LatLng sourceLocation = LatLng( 9.9252,78.1198);
-  static const LatLng destination = LatLng( 13.0827,80.2707);
-  static const LatLng destination2 = LatLng( 7.33609383,8.07600055);
-  List<Marker> _marker = [];
+  static const LatLng scad = LatLng(  9.9252,78.1198);
+  static const LatLng scad4 = LatLng(13.0827,80.2707);
+  static const LatLng scad2 = LatLng( 11.0168,76.9558);
+  static const LatLng scad3 = LatLng(11.6643,78.1460);
 
-  final List<Marker> _list = const [
-    Marker(
-        markerId: MarkerId("1"),
-        position: sourceLocation,
-        infoWindow: InfoWindow(
-            title: 'Source'
-        )
-    ),
-    Marker(
-        markerId: MarkerId("2"),
-      position: destination,
-      infoWindow: InfoWindow(
-        title: 'Destination'
-      )
-    ),
-    Marker(
-        markerId: MarkerId("3"),
-        position: destination2,
-        infoWindow: InfoWindow(
-            title: 'Destination2'
-        )
-    ),
+  static const LatLng dubai = LatLng( 13.0827,80.2707);
+  static const LatLng dubai2 = LatLng( 9.9252,78.1198);
+  static const LatLng dubai3 = LatLng( 9.9252,78.1198);
+
+  static const LatLng tvl = LatLng( 13.0827,80.2707);
+  static const LatLng tvl2 = LatLng( 9.9252,78.1198);
+  static const LatLng tvl3 = LatLng( 9.9252,78.1198);
+  static const LatLng tvl4 = LatLng( 9.9252,78.1198);
+
+
+  static const List<String> listItems = [
+    'scad',
+    'dubai',
+    'tvl'
   ];
+
+
   LocationData? currentLocation;
- location() async {
+  location() async {
     Location location = Location();
     location.getLocation().then((location) {
       currentLocation = location;
@@ -60,70 +51,110 @@ class MapSampleState extends State<MapSample> {
       }
     });
   }
-
-  @override
-  void dispose() {
-
-    super.dispose();
-  }
-
   @override
   void initState(){
     super.initState();
     location();
-    _marker.addAll(_list);
   }
-
+  @override
+  void dispose() {
+    super.dispose();
+  }
+  var val = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Track",
-          style: TextStyle(color: Colors.black,fontSize: 16),
+        iconTheme: IconThemeData(
+            color: Colors.black
         ),
-      ),
-      body: currentLocation == null ? Center(child: const Text("Loading....")) : GoogleMap(
-        initialCameraPosition: CameraPosition(
-            target: LatLng(currentLocation!.latitude!,currentLocation!.longitude!),
-            zoom: 13.5
-
+        backgroundColor: Colors.white,
+        elevation: 4,
+        title: Autocomplete<String>(
+          optionsBuilder: (textEditingValue){
+            if(textEditingValue.text == ''){
+              return const Iterable<String>.empty();
+            }
+            return listItems.where((String item){
+              return item.contains(textEditingValue.text.toLowerCase());
+            });
+          },
+          onSelected: (String item){
+            setState(() {
+              val = item;
+            });
+          },
         ),
-        buildingsEnabled: true,
-        indoorViewEnabled: true,
-        polylines: {
-          Polyline(
-            polylineId: PolylineId('1'),
-            points:[LatLng(currentLocation!.latitude!,currentLocation!.longitude!),sourceLocation,destination],
-            color: Colors.orange,
-            width: 4
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: GestureDetector(
+              onTap: (){
+                print(val);
+              },
+                child: Icon(Icons.search)
+            ),
           )
-        },
-        markers:{
-          Marker(
-              markerId: MarkerId("1"),
-              position: sourceLocation,
-              infoWindow: InfoWindow(
-                  title: 'Destination1'
-              )
-          ),
-          Marker(
-              markerId: MarkerId("2"),
-              position: destination,
-              infoWindow: InfoWindow(
-                  title: 'Destination2'
-              )
-          ),
-          Marker(
-              markerId: MarkerId("3"),
-              position: LatLng(currentLocation!.latitude!,currentLocation!.longitude!),
-              infoWindow: InfoWindow(
-                  title: 'You are Here'
-              )
-          ),
-        },
+        ],
       ),
-
+      body: currentLocation == null ?
+        Center(child: const Text("Loading...."))
+          : val == "scad" ?
+      GoogleMap(
+          initialCameraPosition: CameraPosition(
+              target: LatLng(currentLocation!.latitude!,currentLocation!.longitude!),
+              zoom: 10
+          ),
+          buildingsEnabled: true,
+          indoorViewEnabled: true,
+          polylines: {
+            Polyline(
+              polylineId: PolylineId('1'),
+              points:[LatLng(currentLocation!.latitude!,currentLocation!.longitude!),scad,scad2,scad3,scad4],
+              color: Colors.orange,
+              width: 4
+            )
+          },
+          markers:{
+            Marker(
+                markerId: MarkerId("1"),
+                position: scad,
+                infoWindow: InfoWindow(
+                    title: 'Destination1'
+                )
+            ),
+            Marker(
+                markerId: MarkerId("2"),
+                position: scad2,
+                infoWindow: InfoWindow(
+                    title: 'Destination2'
+                )
+            ),
+            Marker(
+                markerId: MarkerId("3"),
+                position: scad3,
+                infoWindow: InfoWindow(
+                    title: 'Destination2'
+                )
+            ),
+            Marker(
+                markerId: MarkerId("4"),
+                position: scad4,
+                infoWindow: InfoWindow(
+                    title: 'Destination2'
+                )
+            ),
+            Marker(
+                markerId: MarkerId("me"),
+                position: LatLng(currentLocation!.latitude!,currentLocation!.longitude!),
+                infoWindow: InfoWindow(
+                    title: 'You are Here'
+                )
+            ),
+          },
+        ) : Center(child: Text("This place not Register for Now"))
     );
   }
 }
+
+
