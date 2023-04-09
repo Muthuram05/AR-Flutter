@@ -15,29 +15,14 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:vector_math/vector_math_64.dart';
 
 
-class mahal extends StatelessWidget {
+class objectView extends StatefulWidget {
   final String name;
-  const mahal({Key? key,required this.name}) : super(key: key);
-
+  const objectView({Key? key,required this.name}) : super(key: key);
   @override
-  Widget build(BuildContext context) {
-    return  MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-          body: LocalAndWebObjectsView(name: name,),
-        ),
-    );
-  }
+  State<objectView> createState() => _objectViewState();
 }
 
-class LocalAndWebObjectsView extends StatefulWidget {
-  final String name;
-  const LocalAndWebObjectsView({Key? key,required this.name}) : super(key: key);
-  @override
-  State<LocalAndWebObjectsView> createState() => _LocalAndWebObjectsViewState();
-}
-
-class _LocalAndWebObjectsViewState extends State<LocalAndWebObjectsView> {
+class _objectViewState extends State<objectView> {
   final GlobalKey _key = GlobalKey();
   late ARSessionManager arSessionManager;
   late ARObjectManager arObjectManager;
@@ -71,87 +56,89 @@ class _LocalAndWebObjectsViewState extends State<LocalAndWebObjectsView> {
   }
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 5),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Stack(
-              children: [
-                SizedBox(
-                  // child: Screenshot(
-                  //   controller: controller,
-                  //   child: Container(
-                  //     color: Color(0xff000000),
-                  //   ),
-                  // ),
-                  height: MediaQuery.of(context).size.height * 1,
-                  width: double.infinity,
-                        child: RepaintBoundary(
-                          key: _key,
-                          child: ClipRRect(
-                            child: ARView(
-                              onARViewCreated: onARViewCreated,
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Stack(
+                children: [
+                  SizedBox(
+                    // child: Screenshot(
+                    //   controller: controller,
+                    //   child: Container(
+                    //     color: Color(0xff000000),
+                    //   ),
+                    // ),
+                    height: MediaQuery.of(context).size.height * 1,
+                    width: double.infinity,
+                          child: RepaintBoundary(
+                            key: _key,
+                            child: ClipRRect(
+                              child: ARView(
+                                onARViewCreated: onARViewCreated,
+                              ),
                             ),
                           ),
-                        ),
-                ),
-                Positioned(
-                  left: (MediaQuery.of(context).size.width * 0.5) - 40,
-                  bottom: 5,
-                  child: GestureDetector(
-                    onTap: (){
-                      object ?
-                       null :
-                      onLocalObjectButtonPressed(widget.name);
-                    },
-                    child: SizedBox(
-                      height: 80,
-                      width: 80,
-                      child: status ? CircularProgressIndicator() : Image.asset("lib/assets/image/camera.png"),
-                    ),
                   ),
-                ),
-                object ?
-                Positioned(
-                  left: (MediaQuery.of(context).size.width * 0.2) - 40,
-                  bottom: 5,
-                  child: GestureDetector(
-                    onTap: (){
-                      arObjectManager.removeNode(localObjectNode!);
-                      localObjectNode = null;
-                      setState(() {
-                        object = false;
-                      });
-                    },
-                    child: SizedBox(
-                      height: 80,
-                      width: 80,
-                      child: Image.asset("lib/assets/image/remove.png"),
-                    ),
-                  ),
-                ) :
-                Container(),
-                object ?
-                Positioned(
-                    left: (MediaQuery.of(context).size.width * 0.8) - 40,
+                  Positioned(
+                    left: (MediaQuery.of(context).size.width * 0.5) - 40,
                     bottom: 5,
-                    child: InkWell(
-                      onTap: () async{
-                        _capture();
+                    child: GestureDetector(
+                      onTap: (){
+                        object ?
+                         null :
+                        onLocalObjectButtonPressed(widget.name);
                       },
                       child: SizedBox(
-                        width: 80,
                         height: 80,
-                        child: Image.asset("lib/assets/image/screenshot.png"),
+                        width: 80,
+                        child: status ? CircularProgressIndicator() : Image.asset("lib/assets/image/camera.png"),
                       ),
-                    )
-                ) :
-                Container()
-              ],
-            ),
-          ],
+                    ),
+                  ),
+                  object ?
+                  Positioned(
+                    left: (MediaQuery.of(context).size.width * 0.2) - 40,
+                    bottom: 5,
+                    child: GestureDetector(
+                      onTap: (){
+                        arObjectManager.removeNode(localObjectNode!);
+                        localObjectNode = null;
+                        setState(() {
+                          object = false;
+                        });
+                      },
+                      child: SizedBox(
+                        height: 80,
+                        width: 80,
+                        child: Image.asset("lib/assets/image/remove.png"),
+                      ),
+                    ),
+                  ) :
+                  Container(),
+                  object ?
+                  Positioned(
+                      left: (MediaQuery.of(context).size.width * 0.8) - 40,
+                      bottom: 5,
+                      child: InkWell(
+                        onTap: () async{
+                          _capture();
+                        },
+                        child: SizedBox(
+                          width: 80,
+                          height: 80,
+                          child: Image.asset("lib/assets/image/screenshot.png"),
+                        ),
+                      )
+                  ) :
+                  Container()
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

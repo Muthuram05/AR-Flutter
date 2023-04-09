@@ -30,7 +30,7 @@ class module extends StatelessWidget {
                       color: Color(0xff7ec7c0),
                       child:InkWell(
                         onTap: (){
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=>mahal(name: "lib/assets/mahal/untitled.gltf",)));
+                          Navigator.push(context,MaterialPageRoute(builder: (context)=>objectView(name: "lib/assets/mahal/untitled.gltf",)));
                         },
                         child: SizedBox(
                           height: 150,
@@ -72,7 +72,7 @@ class module extends StatelessWidget {
                       color: Color(0xff7ec7c0),
                       child:InkWell(
                         onTap: (){
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=>mahal(name:"lib/assets/free__burj_khalifa_dubai/scene.gltf" ,)));
+                          Navigator.push(context,MaterialPageRoute(builder: (context)=>objectView(name:"lib/assets/free__burj_khalifa_dubai/scene.gltf" ,)));
                         },
                         child: SizedBox(
                             height: 150,
@@ -121,7 +121,7 @@ class module extends StatelessWidget {
                       color: Color(0xff7ec7c0),
                       child:InkWell(
                         onTap: (){
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=>mahal(name: "lib/assets/Sponza/Sponza.gltf",)));
+                          Navigator.push(context,MaterialPageRoute(builder: (context)=>objectView(name: "lib/assets/Sponza/Sponza.gltf",)));
                         },
                         child: SizedBox(
                             height: 150,
@@ -163,7 +163,7 @@ class module extends StatelessWidget {
                       color: Color(0xff7ec7c0),
                       child:InkWell(
                         onTap: (){
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=>mahal(name: "lib/assets/colosseum_rome_italy/scene.gltf")));
+                          Navigator.push(context,MaterialPageRoute(builder: (context)=>objectView(name: "lib/assets/colosseum_rome_italy/scene.gltf")));
                         },
                         child: SizedBox(
                             height: 150,
@@ -212,7 +212,7 @@ class module extends StatelessWidget {
                       color: Color(0xff7ec7c0),
                       child:InkWell(
                         onTap: (){
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=>mahal(name: "lib/assets/wh/wh.gltf")));
+                          Navigator.push(context,MaterialPageRoute(builder: (context)=>objectView(name: "lib/assets/wh/wh.gltf")));
                         },
                         child: SizedBox(
                             height: 150,
@@ -254,7 +254,7 @@ class module extends StatelessWidget {
                       color: Color(0xff7ec7c0),
                       child:InkWell(
                         onTap: (){
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=>mahal(name: "lib/assets/christ_the_redeemer/scene.gltf")));
+                          Navigator.push(context,MaterialPageRoute(builder: (context)=>objectView(name: "lib/assets/christ_the_redeemer/scene.gltf")));
                         },
                         child: SizedBox(
                             height: 150,
@@ -303,7 +303,7 @@ class module extends StatelessWidget {
                       color: Color(0xff7ec7c0),
                       child:InkWell(
                         onTap: (){
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=>mahal(name: "lib/assets/the_great_pyramid_of_giza/scene.gltf")));
+                          Navigator.push(context,MaterialPageRoute(builder: (context)=>objectView(name: "lib/assets/the_great_pyramid_of_giza/scene.gltf")));
                         },
                         child: SizedBox(
                             height: 150,
@@ -345,7 +345,7 @@ class module extends StatelessWidget {
                       color: Color(0xff7ec7c0),
                       child:InkWell(
                         onTap: (){
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=>mahal(name: "lib/assets/vinh_stadium/scene.gltf")));
+                          Navigator.push(context,MaterialPageRoute(builder: (context)=>objectView(name: "lib/assets/vinh_stadium/scene.gltf")));
                         },
                         child: SizedBox(
                             height: 150,

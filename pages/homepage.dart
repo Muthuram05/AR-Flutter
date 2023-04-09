@@ -1,6 +1,4 @@
  import 'package:flutter/material.dart';
-import 'game/start.dart';
-import 'map.dart';
 import 'pages.dart';
 
  class homepage extends StatelessWidget {

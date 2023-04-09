@@ -33,7 +33,6 @@ class MapSampleState extends State<MapSample> {
     'tvl'
   ];
 
-
   LocationData? currentLocation;
   location() async {
     Location location = Location();

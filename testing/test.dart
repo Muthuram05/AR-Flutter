@@ -94,7 +94,7 @@ class _startGameState extends State<startGame> {
     } else {
       var newNode = ARNode(
           type: NodeType.localGLTF2,
-          uri: "lib/assets/Chicken_01/Chicken_01.gltf",
+          uri: "lib/assets/heart/heart.gltf",
           scale: Vector3(0, 0, 0),
           position: Vector3(0.0, 0.0, 0.0),
           rotation: Vector4(1.0, 0.0, 0.0, 0.0));
@@ -112,7 +112,7 @@ class _startGameState extends State<startGame> {
           type: NodeType.webGLB,
           uri:
           // "https://github.com/KhronosGroup/glTF-Sample-Models/raw/master/2.0/2CylinderEngine/glTF-Binary/2CylinderEngine.glb",
-          "https://github.com/KhronosGroup/glTF-Sample-Models/raw/master/2.0/Fox/glTF-Binary/Fox.glb",
+          "https://firebasestorage.googleapis.com/v0/b/newsapp-49d4e.appspot.com/o/image%2Funtitled.glb?alt=media&token=9307d023-edd3-4976-8615-2454625eea01",
           // "https://github.com/Muthuram05/AR-Flutter/blob/main/arvr.glb",
           scale: Vector3(0.2, 0.2, 0.2));
       bool? didAddWebNode = await arObjectManager.addNode(newNode);

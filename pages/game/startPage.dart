@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'start.dart';
+import 'package:sharma/testing/test.dart';
+import 'startGame.dart';
 
 class startPage extends StatefulWidget {
   const startPage({Key? key}) : super(key: key);
@@ -26,10 +27,10 @@ class _startPageState extends State<startPage> {
                   child: TextFormField(
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value)=>
-                    value != null &&  value.length < 6  ? 'Enter min 6 characters' : null,
+                    value != null &&  value.length < 6  ? 'Enter Valid Name' : null,
                     controller: registerController,
                     decoration: const InputDecoration(
-                      labelText: 'Enter Register Name',
+                      labelText: 'Enter Game Name',
                     ),
                   ),
                 ),
@@ -40,7 +41,7 @@ class _startPageState extends State<startPage> {
                     final isValid = formKey.currentState!.validate();
                     if(!isValid) return;
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => start()));
+                        MaterialPageRoute(builder: (context) => startGame()));
                   },
                   child: const Text("next")),
             ],

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'create.dart';
+import 'createGame.dart';
 
 class CreatePage extends StatefulWidget {
   const CreatePage({Key? key}) : super(key: key);
@@ -40,7 +40,7 @@ class _CreatePageState extends State<CreatePage> {
                     final isValid = formKey.currentState!.validate();
                     if(!isValid) return;
                     Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => create()));
+                          MaterialPageRoute(builder: (context) => createGame(gameName: registerController.text,)));
                     },
                   child: const Text("next")),
             ],
