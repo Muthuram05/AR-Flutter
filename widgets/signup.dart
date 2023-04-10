@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
 import '../main.dart';
 
 class signup extends StatefulWidget {
@@ -115,16 +114,8 @@ class _signupState extends State<signup> {
           password: passwordController.text.trim()
       );
       final user = FirebaseAuth.instance.currentUser!;
-      final docUser = FirebaseFirestore.instance.collection('users').doc(user.uid!);
-      final json = {
-        'name' : "User",
-        'age' : "00/00/0000",
-        'contact' : "0000000000",
-        'profile' : "https://firebasestorage.googleapis.com/v0/b/newsapp-49d4e.appspot.com/o/image%2Fuser1.png?alt=media&token=8a31b66c-1bae-4317-917b-313130039b22"
-      };
-      await docUser.set(
-          json
-      );
+      print(user.uid);
+
       Fluttertoast.showToast(
           msg: "Account Successfully Created",
           toastLength: Toast.LENGTH_SHORT,

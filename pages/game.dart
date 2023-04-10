@@ -15,18 +15,6 @@ class _gameState extends State<game> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("ArGame",
-        style: TextStyle(
-          color: Color(0xffFFB319),
-          fontFamily: 'MontserratAlternates',
-          fontWeight: FontWeight.bold,
-        ),
-        ),
-        leading: IconButton(onPressed: (){Navigator.pop(context);}, icon: Icon(Icons.arrow_back_ios,color: Colors.amber,)),
-        backgroundColor: Colors.white,
-        centerTitle: true,
-      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
