@@ -5,6 +5,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../main.dart';
+import '../pages/index.dart';
 
 class signup extends StatefulWidget {
   final Function() onClickedSignIn;
@@ -137,6 +138,9 @@ class _signupState extends State<signup> {
           fontSize: 16.0
       );
     }
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) =>  IndexPage()),);
     navigatorKey.currentState!.popUntil((route)=>route.isFirst);
   }
 }
