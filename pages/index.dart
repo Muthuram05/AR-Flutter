@@ -25,7 +25,7 @@ class _IndexPageState extends State<IndexPage> {
     module(),
     homepage(),
     MapSample(),
-    Profile(),
+    profile(),
   ];
 
   @override

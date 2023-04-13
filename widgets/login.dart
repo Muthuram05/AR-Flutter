@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:sharma/pages/index.dart';
+import '../pages/index.dart';
 import '../main.dart';
 import '../pages/forgotPassword.dart';
 
@@ -154,9 +154,6 @@ class _loginState extends State<login> {
            fontSize: 16.0
        );
      }
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) =>  IndexPage()),);
      navigatorKey.currentState!.popUntil((route)=>route.isFirst);
   }
 }

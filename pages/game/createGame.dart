@@ -6,7 +6,7 @@ import 'package:ar_flutter_plugin/models/ar_node.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:sharma/pages/game/CreatePage.dart';
+import 'CreatePage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 

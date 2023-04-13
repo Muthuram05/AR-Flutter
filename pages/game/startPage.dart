@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sharma/testing/test.dart';
+import '../../testing/test.dart';
 import 'startGame.dart';
 
 class startPage extends StatefulWidget {

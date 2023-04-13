@@ -114,9 +114,20 @@ class _signupState extends State<signup> {
           email: emailController.text.trim(),
           password: passwordController.text.trim()
       );
+
       final user = FirebaseAuth.instance.currentUser!;
       print(user.uid);
 
+      final docUser = FirebaseFirestore.instance.collection('travelar').doc(user.uid!);
+      final json = {
+        'name' : "User",
+        'age' : "00/00/0000",
+        'contact' : "0000000000",
+        'profile' : "https://firebasestorage.googleapis.com/v0/b/newsapp-49d4e.appspot.com/o/image%2Fuser1.png?alt=media&token=8a31b66c-1bae-4317-917b-313130039b22"
+      };
+      await docUser.set(
+          json
+      );
       Fluttertoast.showToast(
           msg: "Account Successfully Created",
           toastLength: Toast.LENGTH_SHORT,
@@ -137,10 +148,8 @@ class _signupState extends State<signup> {
           textColor: Colors.white,
           fontSize: 16.0
       );
+      print(e.toString());
     }
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) =>  IndexPage()),);
     navigatorKey.currentState!.popUntil((route)=>route.isFirst);
   }
 }

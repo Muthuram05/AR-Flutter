@@ -19,6 +19,6 @@ class _AuthPageState extends State<AuthPage> {
   signup(onClickedSignIn: toggle);
   void toggle() => setState(() {
     isLogin = !isLogin;
-  }
+    }
   );
 }
