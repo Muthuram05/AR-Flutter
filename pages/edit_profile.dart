@@ -94,10 +94,10 @@ class _edit_profileState extends State<edit_profile> {
     final PhoneNo = phoneNo.text;
     final Age = age.text;
     createUser(Name:Name,mobileNo: PhoneNo,Age :Age);
-    navigatorKey.currentState!.popUntil((route)=>route.isFirst);
+    Navigator.pop(context);
   }
   Future createUser({required String Name , required String mobileNo, required String Age}) async{
-    final docUser = FirebaseFirestore.instance.collection('travelar').doc(user.uid!);
+    final docUser = FirebaseFirestore.instance.collection('travelar').doc(user.uid);
     final json = {
       'name' :Name,
       'age' : Age,

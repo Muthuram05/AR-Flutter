@@ -8,14 +8,15 @@ import 'pages/pages.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  // final prefs = await SharedPreferences.getInstance();
-  // final showHome = prefs.getBool('showHome') ?? false;
+
   runApp(MyApp());
 }
+// final prefs = await SharedPreferences.getInstance();
+// final showHome = prefs.getBool('showHome') ?? false;
 
 final navigatorKey = GlobalKey<NavigatorState>();
 class MyApp extends StatelessWidget {
-  // final bool showHome;
+  // final bool showHome; , required this.showHome
   const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -34,8 +35,11 @@ class MyApp extends StatelessWidget {
                 else if(snapshot.hasData){
                   return IndexPage();
                 }
+                // else if(showHome == false){
+                //   return OnBoardingPage();
+                // }
                 else{
-                  return AuthPage();
+                  return OnBoardingPage();
                 }
               }
           )

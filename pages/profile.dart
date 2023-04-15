@@ -89,6 +89,13 @@ class _profileState extends State<profile> {
               },
             ),
             ListTile(
+              leading: const Icon(Icons.heart_broken),
+              title: const Text('Likes'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> privacy()));
+              },
+            ),
+            ListTile(
                 leading: const Icon(Icons.logout),
                 title: const Text(' Logout '),
                 onTap: () async{
@@ -96,6 +103,7 @@ class _profileState extends State<profile> {
                   navigatorKey.currentState!.popUntil((route)=>route.isFirst);
                 }
             ),
+
           ],
         ),
       ),

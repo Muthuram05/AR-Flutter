@@ -19,13 +19,19 @@ class MapSampleState extends State<MapSample> {
 
   static const LatLng dubai = LatLng( 13.0827,80.2707);
   static const LatLng dubai2 = LatLng( 9.9252,78.1198);
-  static const LatLng dubai3 = LatLng( 9.9252,78.1198);
+  static const LatLng dubai3 = LatLng( 9.9264,78.1200);
+  static const LatLng dubai4 = LatLng( 9.9258,78.1196);
+
 
   static const LatLng tvl = LatLng( 13.0827,80.2707);
   static const LatLng tvl2 = LatLng( 9.9252,78.1198);
   static const LatLng tvl3 = LatLng( 9.9252,78.1198);
   static const LatLng tvl4 = LatLng( 9.9252,78.1198);
 
+  LatLng fin = LatLng(0,0);
+  LatLng fin2 = LatLng(0,0);
+  LatLng fin3 = LatLng(0,0);
+  LatLng fin4 =LatLng(0,0);
 
   static const List<String> listItems = [
     'scad',
@@ -80,6 +86,24 @@ class MapSampleState extends State<MapSample> {
           },
           onSelected: (String item){
             setState(() {
+              if(item == 'scad'){
+                fin = LatLng( 9.9252,78.1198);
+                fin2 = LatLng(13.0827,80.2707);
+                fin3 = LatLng( 11.0168,76.9558);
+                fin4 = LatLng(11.6643,78.1460);
+              }
+              if(item == 'dubai'){
+                fin = LatLng( 13.0827,80.2707);
+                fin2 = LatLng( 9.9252,78.1198);
+                fin3 = LatLng( 9.9264,78.1200);
+                fin4 = LatLng( 9.9258,78.1196);
+              }
+              if(item == 'tvl'){
+                fin = LatLng( 13.0827,80.2707);
+                fin2 = LatLng( 9.9252,78.1198);
+                fin3 = LatLng( 9.9252,78.1198);
+                fin4 = LatLng( 9.9252,78.1198);
+              }
               val = item;
             });
           },
@@ -98,60 +122,72 @@ class MapSampleState extends State<MapSample> {
       ),
       body: currentLocation == null ?
         Center(child: const Text("Loading...."))
-          : val == "scad" ?
-      GoogleMap(
-          initialCameraPosition: CameraPosition(
-              target: LatLng(currentLocation!.latitude!,currentLocation!.longitude!),
-              zoom: 10
+          : fin == LatLng(0,0) ? Center(child: Text("Enter Place or This place not Register for Now "))
+     : Stack(
+       children:[ GoogleMap(
+            initialCameraPosition: CameraPosition(
+                target: LatLng(currentLocation!.latitude!,currentLocation!.longitude!),
+                zoom: 10
+            ),
+            buildingsEnabled: true,
+            indoorViewEnabled: true,
+            polylines: {
+              Polyline(
+                polylineId: PolylineId('1'),
+                points:[LatLng(currentLocation!.latitude!,currentLocation!.longitude!),fin,fin2,fin3,fin4],
+                color: Colors.orange,
+                width: 4
+              )
+            },
+            markers:{
+              Marker(
+                  markerId: MarkerId("1"),
+                  position: fin,
+                  infoWindow: InfoWindow(
+                      title: 'Destination1'
+                  )
+              ),
+              Marker(
+                  markerId: MarkerId("2"),
+                  position: fin2,
+                  infoWindow: InfoWindow(
+                      title: 'Destination2'
+                  )
+              ),
+              Marker(
+                  markerId: MarkerId("3"),
+                  position: fin3,
+                  infoWindow: InfoWindow(
+                      title: 'Destination2'
+                  )
+              ),
+              Marker(
+                  markerId: MarkerId("4"),
+                  position: fin4,
+                  infoWindow: InfoWindow(
+                      title: 'Destination2'
+                  )
+              ),
+              Marker(
+                  markerId: MarkerId("me"),
+                  position: LatLng(currentLocation!.latitude!,currentLocation!.longitude!),
+                  infoWindow: InfoWindow(
+                      title: 'You are Here'
+                  )
+              ),
+            },
           ),
-          buildingsEnabled: true,
-          indoorViewEnabled: true,
-          polylines: {
-            Polyline(
-              polylineId: PolylineId('1'),
-              points:[LatLng(currentLocation!.latitude!,currentLocation!.longitude!),scad,scad2,scad3,scad4],
-              color: Colors.orange,
-              width: 4
-            )
-          },
-          markers:{
-            Marker(
-                markerId: MarkerId("1"),
-                position: scad,
-                infoWindow: InfoWindow(
-                    title: 'Destination1'
-                )
-            ),
-            Marker(
-                markerId: MarkerId("2"),
-                position: scad2,
-                infoWindow: InfoWindow(
-                    title: 'Destination2'
-                )
-            ),
-            Marker(
-                markerId: MarkerId("3"),
-                position: scad3,
-                infoWindow: InfoWindow(
-                    title: 'Destination2'
-                )
-            ),
-            Marker(
-                markerId: MarkerId("4"),
-                position: scad4,
-                infoWindow: InfoWindow(
-                    title: 'Destination2'
-                )
-            ),
-            Marker(
-                markerId: MarkerId("me"),
-                position: LatLng(currentLocation!.latitude!,currentLocation!.longitude!),
-                infoWindow: InfoWindow(
-                    title: 'You are Here'
-                )
-            ),
-          },
-        ) : Center(child: Text("This place not Register for Now"))
+         Positioned(
+           right: 20,
+             top: 30,
+             child: Container(
+               color: Colors.red,
+               height: 30,
+               width: 30,
+             )
+         )
+      ]
+     )
     );
   }
 }

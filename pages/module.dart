@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../assets_page/mahal.dart';
+import '../assets_page/objectMap.dart';
 
 
 class module extends StatelessWidget {
@@ -7,12 +7,13 @@ class module extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       body:SingleChildScrollView(
         child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 SizedBox(
-                  height: 10,
+                  height: 40,
                 ),
                 Center(
                   child: Text("Tourist Spots", style: TextStyle(

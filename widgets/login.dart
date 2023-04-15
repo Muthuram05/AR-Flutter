@@ -3,14 +3,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:travel_ar/widgets/signup.dart';
 import '../pages/index.dart';
 import '../main.dart';
 import '../pages/forgotPassword.dart';
 
 
 class login extends StatefulWidget {
-  final VoidCallback onClickedSignUp;
-  const login({Key? key, required this.onClickedSignUp}) : super(key: key);
+  const login({Key? key}) : super(key: key);
 
   @override
   State<login> createState() => _loginState();
@@ -29,95 +29,113 @@ class _loginState extends State<login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body:  Padding(
-            padding: const EdgeInsets.only(left:20.0,right: 20.0),
-            child: Form(
-              key : formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Icon(Icons.account_circle,size: 30,color: Colors.deepPurple,),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * .6 ,
-                        child: TextFormField(
-                        cursorColor: Colors.deepPurple,
-                        textInputAction: TextInputAction.next,
-                        controller: emailController,
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Enter Your Email'),
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (email)=>
-                        email != null && !EmailValidator.validate(email) ? 'Enter a valid email' : null,
+      backgroundColor: Colors.white,
+        body:  SingleChildScrollView(
+          child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Form(
+                key : formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.13,
                     ),
-                      ),
-                    ],
-                  ),
-                  Divider(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Icon(Icons.lock,size: 30,color: Colors.deepPurple,),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * .6 ,
-                        child: TextFormField(
-                          obscureText: true,
-                          cursorColor: Colors.deepPurple,
-                          textInputAction: TextInputAction.done,
-                          controller: passwordController,
-                          decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: 'Enter Your Password'),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value)=>
-                          value != null &&  value.length < 6  ? 'Enter min 6 characters' : null,
+                    Row(
+                      children: [
+                        Text("Already\nhave an \nAccount?",style: TextStyle(fontSize: 28,fontWeight: FontWeight.w500),),
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.45,
+                          height: MediaQuery.of(context).size.height * 0.22,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              fit: BoxFit.fill,
+                              image: AssetImage("lib/assets/image/signin.png"),
+                            ),
+                          ),
+                        )
+                      ],
+
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.13,
+                    ),
+                    Text("Email",style: TextStyle(color: Colors.teal.shade400),),
+                    TextFormField(
+                      cursorColor: Colors.deepPurple,
+                      textInputAction: TextInputAction.next,
+                      controller: emailController,
+                      decoration: InputDecoration(
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.teal.shade400),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.teal.shade400),
+                          ),
+                          hintText: 'Enter Your Email'),
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (email)=>
+                      email != null && !EmailValidator.validate(email) ? 'Enter a valid email' : null,
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.03,
+                    ),
+                    Text("Password",style: TextStyle(color: Colors.teal.shade400),),
+                    TextFormField(
+                      obscureText: true,
+                      cursorColor: Colors.deepPurple,
+                      textInputAction: TextInputAction.done,
+                      controller: passwordController,
+                      decoration: InputDecoration(
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.teal.shade400),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.teal.shade400),
+                          ),
+                          hintText: 'Enter Your Password'),
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value)=>
+                      value != null &&  value.length < 6  ? 'Enter min 6 characters' : null,
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.03,
+                    ),
+                    Center(
+                      child: Container(
+                        width: 220,
+                        height: 40,
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(Colors.teal.shade400),
+                          ),
+                          onPressed: signIn,child: Text("Sign in"),
                         ),
                       ),
-                    ],
-                  ),
-                  Divider(),
-                  GestureDetector(
-                    child: Text(
-                      "Forgot password?",
-                      style: TextStyle(
-                        decoration: TextDecoration.underline,
-                        color: Colors.black,
-                        fontSize: 14
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.03,
+                    ),
+                    Center(
+                      child: GestureDetector(
+                        child: Text(
+                          "Forgot password?",
+                          style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              color: Colors.teal.shade500,
+                              fontSize: 14
+                          ),
+                        ),
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=> forgotPassword()));
+                        },
                       ),
                     ),
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=> forgotPassword()));
-                    },
-                  ),
-                  ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(Colors.deepPurple),
-                    ),
-                    onPressed: signIn,child: Text("Sign in"),
-                  ),
-                  RichText(text: TextSpan(
-                    style: TextStyle(color: Colors.black,fontSize: 18),
-                    text: 'Don\'t have an account ',
-                    children: [
-                      TextSpan(
-                        recognizer: TapGestureRecognizer()
-                        ..onTap = widget.onClickedSignUp,
-                        text: 'Sign Up',
-                        style: const TextStyle(
-                          decoration: TextDecoration.underline,
-                        )
-                      )
-                    ]
-                  ),
-                  ),
-
-                ],
+                  ],
+                ),
               ),
-            ),
       ),
+        ),
     );
   }
   Future signIn() async{
@@ -142,6 +160,12 @@ class _loginState extends State<login> {
           textColor: Colors.white,
           fontSize: 16.0
       );
+      Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (context) => IndexPage()),
+      );
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => IndexPage()),);
      }
      on FirebaseException catch(e){
        Fluttertoast.showToast(
@@ -154,6 +178,6 @@ class _loginState extends State<login> {
            fontSize: 16.0
        );
      }
-     navigatorKey.currentState!.popUntil((route)=>route.isFirst);
+    // navigatorKey.currentState!.popUntil((route)=>route.isFirst);
   }
 }

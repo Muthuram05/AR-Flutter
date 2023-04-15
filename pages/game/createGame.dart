@@ -23,7 +23,7 @@ class _createGameState extends State<createGame> {
   late ARObjectManager arObjectManager;
   final nameController = TextEditingController();
   final hintController = TextEditingController();
-  var error;
+
   //String localObjectReference;
   ARNode? localObjectNode;
   var status = false;
@@ -34,6 +34,8 @@ class _createGameState extends State<createGame> {
   @override
   void dispose() {
     arSessionManager.dispose();
+    nameController.dispose();
+    hintController.dispose();
     super.dispose();
   }
 
@@ -72,13 +74,7 @@ class _createGameState extends State<createGame> {
                   left: 10,
                   child: GestureDetector(
                     onTap: () async {
-                        final urlImage = 'https://firebasestorage.googleapis.com/v0/b/newsapp-49d4e.appspot.com/o/image%2Fapp_logo.png?alt=media&token=b134fd80-0717-4703-b08e-2df7976a7073';
-                        final url = Uri.parse(urlImage);
-                        final response = await http.get(url);
-                        final bytes = response.bodyBytes;
-                        final temp = await getTemporaryDirectory();
-                        final path = '${temp.path}/image.jpg';
-                        await Share.shareXFiles([XFile('${temp.path}/image.jpg')],text:"New Game is Available ${widget.gameName!}");
+                       shareGame();
                       },
                       child: Icon(Icons.share,color: Color(0xFFffffff),size: 36,))
               ),
@@ -120,17 +116,7 @@ class _createGameState extends State<createGame> {
                         actions: <Widget>[
                           TextButton(
                             onPressed: () {
-                              if(nameController.text.isEmpty){
-                                setState(() {
-                                  error = "Name is empty";
-                                });
-                              }
-                              if(nameController.text.isEmpty){
-                                setState(() {
-                                  error = "Hint is empty";
-                                });
-                              }
-                              Navigator.of(ctx).pop();
+
                             },
                             child: Container(
                               padding: const EdgeInsets.all(10),
@@ -148,6 +134,15 @@ class _createGameState extends State<createGame> {
         ),
       ),
     );
+  }
+  shareGame() async{
+    final urlImage = 'https://firebasestorage.googleapis.com/v0/b/newsapp-49d4e.appspot.com/o/image%2Fapp_logo.png?alt=media&token=b134fd80-0717-4703-b08e-2df7976a7073';
+    final url = Uri.parse(urlImage);
+    final response = await http.get(url);
+    final bytes = response.bodyBytes;
+    final temp = await getTemporaryDirectory();
+    final path = '${temp.path}/image.jpg';
+    await Share.shareXFiles([XFile('${temp.path}/image.jpg')],text:"New Game is Available ${widget.gameName!}");
   }
 
   void onARViewCreated(

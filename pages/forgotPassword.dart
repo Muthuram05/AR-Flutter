@@ -21,7 +21,7 @@ class _forgotPasswordState extends State<forgotPassword> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Reset password"),
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: Colors.teal.shade400,
       ),
         body: Padding(
           padding: const EdgeInsets.only(left:20.0,right: 20.0),
@@ -31,18 +31,22 @@ class _forgotPasswordState extends State<forgotPassword> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Icon(Icons.email_outlined,color: Colors.deepPurple,),
+                  Icon(Icons.email_outlined,color: Colors.teal.shade400,),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * .6 ,
                     child: Form(
                       key: formKey,
                       child: TextFormField(
                           controller: emailController,
-                          cursorColor: Colors.deepPurple,
                           textInputAction: TextInputAction.done,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.teal.shade400),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.teal.shade400),
+                              ),
                               hintText: 'Enter Your Email',
-                            border: InputBorder.none
                           ),
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (email)=>
@@ -55,7 +59,7 @@ class _forgotPasswordState extends State<forgotPassword> {
               SizedBox(height: 20,),
               ElevatedButton.icon(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(Colors.deepPurple),
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.teal.shade400),
                 ),
                   onPressed: resetPassword,
                 icon: Icon(Icons.email_outlined),
