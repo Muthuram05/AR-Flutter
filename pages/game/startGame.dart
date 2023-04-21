@@ -1,30 +1,29 @@
-import 'package:ar_flutter_plugin/ar_flutter_plugin.dart';
-import 'package:ar_flutter_plugin/datatypes/node_types.dart';
 import 'package:ar_flutter_plugin/managers/ar_anchor_manager.dart';
 import 'package:ar_flutter_plugin/managers/ar_location_manager.dart';
 import 'package:ar_flutter_plugin/managers/ar_object_manager.dart';
 import 'package:ar_flutter_plugin/managers/ar_session_manager.dart';
 import 'package:ar_flutter_plugin/models/ar_node.dart';
 import 'package:flutter/material.dart';
-import 'package:vector_math/vector_math_64.dart';
 
-class startGame extends StatefulWidget {
-  const startGame({Key? key}) : super(key: key);
 
+class createGame extends StatefulWidget {
+
+  const createGame({Key? key}) : super(key: key);
   @override
-  State<startGame> createState() => _startGameState();
+  State<createGame> createState() => _createGameState();
 }
 
-class _startGameState extends State<startGame> {
+class _createGameState extends State<createGame> {
   late ARSessionManager arSessionManager;
   late ARObjectManager arObjectManager;
 
   //String localObjectReference;
   ARNode? localObjectNode;
-
+  var status = false;
+  var object = false;
   //String webObjectReference;
   ARNode? webObjectNode;
-
+  List userSearchItems = [];
   @override
   void dispose() {
     arSessionManager.dispose();
@@ -33,38 +32,76 @@ class _startGameState extends State<startGame> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height * .8,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(22),
-              child: ARView(
-                onARViewCreated: onARViewCreated,
-              ),
-            ),
-          ),
-          Row(
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5),
+          child: Stack(
             children: [
-              Expanded(
-                child: ElevatedButton(
-                    onPressed: onLocalObjectButtonPressed,
-                    child: const Text("Add / Remove Object")),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 1,
+                width: double.infinity,
+                // child: ClipRRect(
+                //   child: ARView(
+                //     onARViewCreated: onARViewCreated,
+                //   ),
+                // ),
+                child: Container(
+                  color: Color(0xff000000),
+                ),
               ),
-              const SizedBox(
-                width: 10,
+              Positioned(
+                  top: 20,
+                  right: 10,
+                  child: Icon(Icons.cancel_rounded,color: Color(0xFFffffff),size: 36,)
               ),
-              Expanded(
-                child: ElevatedButton(
-                    onPressed:  onWebObjectAtButtonPressed,
-                    child: const Text("Add / Remove Web Object")),
+              Positioned(
+                  bottom: 20,
+                  left: 10,
+                  child: Icon(Icons.share,color: Color(0xFFffffff),size: 36,)
+              ),
+              Positioned(
+                bottom: 10,
+                left: MediaQuery.of(context).size.width * 0.34,
+                child: ElevatedButton(onPressed: (){
+                  showDialog(
+                    context: context,
+                    builder: (ctx) => AlertDialog(
+                      title: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Name"),
+                          TextField(),
+                        ],
+                      ),
+                      content: SizedBox(
+                        height: 80,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Hint"),
+                            TextField(),
+                          ],
+                        ),
+                      ),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(ctx).pop();
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(10),
+                            child: const Text("Done"),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }, child: Text("Find Clue")),
               ),
             ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -74,49 +111,11 @@ class _startGameState extends State<startGame> {
       ARObjectManager arObjectManager,
       ARAnchorManager arAnchorManager,
       ARLocationManager arLocationManager) {
-    this.arSessionManager = arSessionManager;
+
     this.arObjectManager = arObjectManager;
 
-    this.arSessionManager.onInitialize(
-      showFeaturePoints: false,
-      showPlanes: true,
-      customPlaneTexturePath: "assets/triangle.png",
-      showWorldOrigin: true,
-      handleTaps: false,
-    );
     this.arObjectManager.onInitialize();
   }
 
-  Future<void> onLocalObjectButtonPressed() async {
-    if (localObjectNode != null) {
-      arObjectManager.removeNode(localObjectNode!);
-      localObjectNode = null;
-    } else {
-      var newNode = ARNode(
-          type: NodeType.localGLTF2,
-          uri: "lib/assets/Chicken_01/Chicken_01.gltf",
-          scale: Vector3(0, 0, 0),
-          position: Vector3(0.0, 0.0, 0.0),
-          rotation: Vector4(1.0, 0.0, 0.0, 0.0));
-      bool? didAddLocalNode = await arObjectManager.addNode(newNode);
-      localObjectNode = (didAddLocalNode!) ? newNode : null;
-    }
-  }
-
-  Future<void> onWebObjectAtButtonPressed() async {
-    if (webObjectNode != null) {
-      arObjectManager.removeNode(webObjectNode!);
-      webObjectNode = null;
-    } else {
-      var newNode = ARNode(
-          type: NodeType.webGLB,
-          uri:
-          // "https://github.com/KhronosGroup/glTF-Sample-Models/raw/master/2.0/2CylinderEngine/glTF-Binary/2CylinderEngine.glb",
-              "https://github.com/KhronosGroup/glTF-Sample-Models/raw/master/2.0/Fox/glTF-Binary/Fox.glb",
-          // "https://github.com/Muthuram05/AR-Flutter/blob/main/arvr.glb",
-          scale: Vector3(0.2, 0.2, 0.2));
-      bool? didAddWebNode = await arObjectManager.addNode(newNode);
-      webObjectNode = (didAddWebNode!) ? newNode : null;
-    }
-  }
 }
+

@@ -40,12 +40,13 @@ class _guideState extends State<guide> {
         timer.cancel();
         } else {
         setState(() {
-    lon = position.longitude.toString();
-    lat = position.latitude.toString();
-    });
+          lon = position.longitude.toString();
+          lat = position.latitude.toString();
+          });
         }
     });
   }
+
 
   @override
   Widget build(BuildContext context) {

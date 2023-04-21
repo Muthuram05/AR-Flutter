@@ -1,10 +1,8 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:travel_ar/assets_page/objectMap.dart';
 
-import '../keys.dart';
 
 class MapSample extends StatefulWidget {
   const MapSample({Key? key}) : super(key: key);
@@ -14,94 +12,191 @@ class MapSample extends StatefulWidget {
 }
 
 class MapSampleState extends State<MapSample> {
-  final Completer<GoogleMapController> _controller = Completer();
 
-  static const LatLng sourceLocation = LatLng( 37.33500926,-122.03272188);
-  static const LatLng destination = LatLng( 37.33429383,-122.06600055);
-  static const LatLng destination2 = LatLng( 37.33609383,-122.07600055);
-List<LatLng> polylineCoordinates =[LatLng( 37.33500926,-122.03272188),LatLng( 37.33429383,-122.06600055),LatLng( 37.33609383,-122.07600055)];
-var  currentLocation;
+  static const LatLng scad = LatLng(  9.9252,78.1198);
+  static const LatLng scad4 = LatLng(13.0827,80.2707);
+  static const LatLng scad2 = LatLng( 11.0168,76.9558);
+  static const LatLng scad3 = LatLng(11.6643,78.1460);
 
-void getCurrentLocation(){
-  Location location = Location();
+  static const LatLng dubai = LatLng( 13.0827,80.2707);
+  static const LatLng dubai2 = LatLng( 9.9252,78.1198);
+  static const LatLng dubai3 = LatLng( 9.9264,78.1200);
+  static const LatLng dubai4 = LatLng( 9.9258,78.1196);
 
-  location.getLocation().then((location) {
-    currentLocation = location;
-  });
-  print(location.getLocation());
-  print("currentLocation");
-  print(currentLocation);
-}
 
-  void getPolyPoints() async{
-  print("object");
-    PolylinePoints polylinePoints = PolylinePoints();
-    
-    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-        google_api_key,
-      PointLatLng(sourceLocation.latitude, sourceLocation.longitude),
-      PointLatLng(destination.latitude, destination.longitude),
-    );
-    print(result.points);
-    if(result.points.isNotEmpty){
-      for (var point in result.points) {
-        print(point);
-        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+  static const LatLng tvl = LatLng( 13.0827,80.2707);
+  static const LatLng tvl2 = LatLng( 9.9252,78.1198);
+  static const LatLng tvl3 = LatLng( 9.9252,78.1198);
+  static const LatLng tvl4 = LatLng( 9.9252,78.1198);
+
+  LatLng fin = LatLng(0,0);
+  LatLng fin2 = LatLng(0,0);
+  LatLng fin3 = LatLng(0,0);
+  LatLng fin4 =LatLng(0,0);
+
+  static const List<String> listItems = [
+    'scad',
+    'dubai',
+    'tvl'
+  ];
+
+  LocationData? currentLocation;
+  location() async {
+    Location location = Location();
+    location.getLocation().then((location) {
+      currentLocation = location;
+    });
+    location.onLocationChanged.listen((newLoc) {
+      currentLocation = newLoc;
+      if (!mounted) {
+
+      } else {
+        setState(() {
+
+        });
       }
-      setState(() {
-
-      });
-    }
+    });
   }
-
   @override
   void initState(){
-  getCurrentLocation();
-    // getPolyPoints();
     super.initState();
+    location();
   }
-
+  @override
+  void dispose() {
+    super.dispose();
+  }
+  var val = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Track",
-          style: TextStyle(color: Colors.black,fontSize: 16),
+        iconTheme: IconThemeData(
+            color: Colors.black
         ),
-      ),
-      body:GoogleMap(
-        initialCameraPosition: CameraPosition(
-            target: sourceLocation,
-            zoom: 13.5
+        backgroundColor: Colors.white,
+        elevation: 4,
+        title: Autocomplete<String>(
+          optionsBuilder: (textEditingValue){
+            if(textEditingValue.text == ''){
+              return const Iterable<String>.empty();
+            }
+            return listItems.where((String item){
+              return item.contains(textEditingValue.text.toLowerCase());
+            });
+          },
+          onSelected: (String item){
+            setState(() {
+              if(item == 'scad'){
+                fin = LatLng( 9.9252,78.1198);
+                fin2 = LatLng(13.0827,80.2707);
+                fin3 = LatLng( 11.0168,76.9558);
+                fin4 = LatLng(11.6643,78.1460);
+              }
+              if(item == 'dubai'){
+                fin = LatLng( 13.0827,80.2707);
+                fin2 = LatLng( 9.9252,78.1198);
+                fin3 = LatLng( 9.9264,78.1200);
+                fin4 = LatLng( 9.9258,78.1196);
+              }
+              if(item == 'tvl'){
+                fin = LatLng( 13.0827,80.2707);
+                fin2 = LatLng( 9.9252,78.1198);
+                fin3 = LatLng( 9.9252,78.1198);
+                fin4 = LatLng( 9.9252,78.1198);
+              }
+              val = item;
+            });
+          },
         ),
-        polylines: {
-          Polyline(
-              polylineId : PolylineId("route"),
-            points: polylineCoordinates,
-            color: Colors.black,
-            width: 3
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: GestureDetector(
+              onTap: (){
+                print(val);
+              },
+                child: Icon(Icons.search)
+            ),
           )
-        },
-        markers: {
-          Marker(
-            markerId: MarkerId("source"),
-            position: sourceLocation,
-          ),
-          Marker(
-            markerId: MarkerId("source"),
-            position: destination2,
-          ),
-          Marker(
-            markerId: MarkerId("destination"),
-            position: destination,
-            infoWindow: InfoWindow(
-              title: "Destination"
-            )
-          ),
-        },
-
+        ],
       ),
+      body: currentLocation == null ?
+        Center(child: const Text("Loading...."))
+          : fin == LatLng(0,0) ? Center(child: Text("Enter Place or This place not Register for Now "))
+     : Stack(
+       children:[ GoogleMap(
+            initialCameraPosition: CameraPosition(
+                target: LatLng(currentLocation!.latitude!,currentLocation!.longitude!),
+                zoom: 10
+            ),
+            buildingsEnabled: true,
+            indoorViewEnabled: true,
+            polylines: {
+              Polyline(
+                polylineId: PolylineId('1'),
+                points:[LatLng(currentLocation!.latitude!,currentLocation!.longitude!),fin,fin2,fin3,fin4],
+                color: Colors.orange,
+                width: 4
+              )
+            },
+            markers:{
+              Marker(
+                  markerId: MarkerId("1"),
+                  position: fin,
+                  infoWindow: InfoWindow(
+                      title: 'Destination1'
+                  )
+              ),
+              Marker(
+                  markerId: MarkerId("2"),
+                  position: fin2,
+                  infoWindow: InfoWindow(
+                      title: 'Destination2'
+                  )
+              ),
+              Marker(
+                  markerId: MarkerId("3"),
+                  position: fin3,
+                  infoWindow: InfoWindow(
+                      title: 'Destination2'
+                  )
+              ),
+              Marker(
+                  markerId: MarkerId("4"),
+                  position: fin4,
+                  infoWindow: InfoWindow(
+                      title: 'Destination2'
+                  )
+              ),
+              Marker(
+                  markerId: MarkerId("me"),
+                  position: LatLng(currentLocation!.latitude!,currentLocation!.longitude!),
+                  infoWindow: InfoWindow(
+                      title: 'You are Here'
+                  )
+              ),
+            },
+          ),
+         Positioned(
+           right: 20,
+             top: 30,
+             child: GestureDetector(
+               onTap: (){
+                 Navigator.push(context,MaterialPageRoute(builder: (context)=>objectMap()));
+               },
+               child: Container(
+                 color: Colors.red,
+                 height: 30,
+                 width: 30,
+                 child: Icon(Icons.satellite),
+               ),
+             )
+         )
+      ]
+     )
     );
   }
 }
+
+

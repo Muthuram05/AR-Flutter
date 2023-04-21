@@ -1,14 +1,14 @@
- import 'package:flutter/material.dart';
-import 'map.dart';
+import 'package:flutter/material.dart';
 import 'pages.dart';
 
  class homepage extends StatelessWidget {
     const homepage({Key? key}) : super(key: key);
    @override
    Widget build(BuildContext context) {
+
      return Scaffold(
        body:
-         Container(child:
+       Container(child:
          Column(
            mainAxisAlignment: MainAxisAlignment.center,
            children: [
@@ -38,13 +38,6 @@ import 'pages.dart';
                  ],
                ),
              ),
-             // Divider(
-             //   height: 20,
-             //   thickness: 5,
-             //   indent: 45,
-             //   endIndent: 45,
-             //   color: Color(0xff7ec7c0),
-             // ),
              Padding(
                padding: EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 30.0),
                child: Card(
@@ -61,21 +54,12 @@ import 'pages.dart';
                              fit: BoxFit.cover,
                          )
                        ),
-
-                       // child: ClipRRect(
-                       //
-                       //     child: Image.asset("lib/assets/image/tourist_guide.jpeg")
-                       // ),
                    ),
                  ),
                ),
              ),
-
-
-
-
              // Subtittle
-             const Row(
+              Row(
                children:[
                  Padding(
                  padding: EdgeInsets.fromLTRB(50.0, 10.0, 50.0, 0.0),
@@ -132,7 +116,7 @@ import 'pages.dart';
                              onTap: (){
                                Navigator.push(
                                  context,
-                                 MaterialPageRoute(builder: (context) =>  guide()),);
+                                 MaterialPageRoute(builder: (context) =>  MapSample()),);
                              },
                              child: SizedBox(
                                width: 120,
@@ -166,7 +150,6 @@ import 'pages.dart';
                              child:Center(
                                child: Image.asset("lib/assets/image/gamepad.png"),
                              ),
-
                            ),
                          ),
                        ),
@@ -190,25 +173,12 @@ import 'pages.dart';
                    child:Center(
                      child:Image.asset("lib/assets/image/language.png"),
                    ),
-
                  ),
                ),
              ),
-             TextButton(onPressed: (){
-               Navigator.push(
-                 context,
-                 MaterialPageRoute(builder: (context) => MapSample()),);
-             }, child: Text("Text"))
            ],
          )
          ),
-          
-
      );
    }
  }
-
-
-
-
-

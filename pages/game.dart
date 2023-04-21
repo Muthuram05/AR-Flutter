@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sharma/pages/game/startGame.dart';
-
 import 'game/CreatePage.dart';
+import 'game/startPage.dart';
 
 
 
@@ -16,19 +15,6 @@ class _gameState extends State<game> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("ArGame",
-        style: TextStyle(
-          color: Color(0xffFFB319),
-          fontFamily: 'MontserratAlternates',
-          fontWeight: FontWeight.bold,
-
-        ),
-        ),
-        leading: IconButton(onPressed: (){Navigator.pop(context);}, icon: Icon(Icons.arrow_back_ios,color: Colors.amber,)),
-        backgroundColor: Colors.white,
-        centerTitle: true,
-      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -59,7 +45,7 @@ class _gameState extends State<game> {
                 SizedBox(height: 60,),
                 InkWell(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>startGame()));},
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>startPage()));},
                   child: Card(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30)

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../testing/test.dart';
+import 'createGame.dart';
 
 class CreatePage extends StatefulWidget {
   const CreatePage({Key? key}) : super(key: key);
@@ -39,12 +39,8 @@ class _CreatePageState extends State<CreatePage> {
                     FocusScope.of(context).unfocus();
                     final isValid = formKey.currentState!.validate();
                     if(!isValid) return;
-                    showDialog(context: context,
-                        barrierDismissible: false,
-                        builder: (context) => Center(child: CircularProgressIndicator(),)
-                    );
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => test()));
+                    Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => createGame(gameName: registerController.text,)));
                     },
                   child: const Text("next")),
             ],
