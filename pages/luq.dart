@@ -19,6 +19,7 @@ class _luqState extends State<luq> {
           Icons.arrow_back_ios,
           color: Colors.black,
         ),
+        positionSlideIcon: 0.9,
         pages: [
           login(),
           signup()

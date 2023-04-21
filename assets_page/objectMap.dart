@@ -1,6 +1,3 @@
-import 'dart:async';
-import 'dart:typed_data';
-import 'dart:ui' as ui;
 import 'package:ar_flutter_plugin/ar_flutter_plugin.dart';
 import 'package:ar_flutter_plugin/datatypes/node_types.dart';
 import 'package:ar_flutter_plugin/managers/ar_anchor_manager.dart';
@@ -9,147 +6,67 @@ import 'package:ar_flutter_plugin/managers/ar_object_manager.dart';
 import 'package:ar_flutter_plugin/managers/ar_session_manager.dart';
 import 'package:ar_flutter_plugin/models/ar_node.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:vector_math/vector_math_64.dart';
 
+class objectMap extends StatefulWidget {
+  const objectMap({Key? key}) : super(key: key);
 
-class objectView extends StatefulWidget {
-  final String name;
-  const objectView({Key? key,required this.name}) : super(key: key);
   @override
-  State<objectView> createState() => _objectViewState();
+  State<objectMap> createState() => _objectMapState();
 }
 
-class _objectViewState extends State<objectView> {
-  final GlobalKey _key = GlobalKey();
+class _objectMapState extends State<objectMap> {
   late ARSessionManager arSessionManager;
   late ARObjectManager arObjectManager;
 
   //String localObjectReference;
   ARNode? localObjectNode;
-  var status = false;
-  var object = false;
+
   //String webObjectReference;
   ARNode? webObjectNode;
-  int x =  0;
-  List userSearchItems = [];
+
   @override
   void dispose() {
     arSessionManager.dispose();
     super.dispose();
   }
-  void _capture() async{
-    RenderRepaintBoundary boundary = _key.currentContext!.findRenderObject() as RenderRepaintBoundary;
-    if(boundary.debugNeedsPaint){
-      Timer(Duration(seconds: 1) ,() =>_capture());
-      return null;
-    }
-    ui.Image image = await boundary.toImage();
-    ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-    if(byteData != null){
-      Uint8List pngint = byteData.buffer.asUint8List();
-      final saveImage = await ImageGallerySaver.saveImage(
-          Uint8List.fromList(pngint),quality: 90,name: 'scrennshot-${DateTime.now()}.jpg' );
-    }
-  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 5),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          SizedBox(
+            height: MediaQuery.of(context).size.height * .8,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(22),
+              child: ARView(
+                onARViewCreated: onARViewCreated,
+              ),
+            ),
+          ),
+          Row(
             children: [
-              Stack(
-                children: [
-                  SizedBox(
-                    // child: Screenshot(
-                    //   controller: controller,
-                    //   child: Container(
-                    //     color: Color(0xff000000),
-                    //   ),
-                    // ),
-                    height: MediaQuery.of(context).size.height * 1,
-                    width: double.infinity,
-                          child: RepaintBoundary(
-                            key: _key,
-                            child: ClipRRect(
-                              child: ARView(
-                                onARViewCreated: onARViewCreated,
-                              ),
-                            ),
-                          ),
-                  ),
-                  Positioned(
-                    left: (MediaQuery.of(context).size.width * 0.5) - 40,
-                    bottom: 5,
-                    child: GestureDetector(
-                      onTap: (){
-                        object ?
-                         null :
-                        onLocalObjectButtonPressed(widget.name);
-                      },
-                      child: SizedBox(
-                        height: 80,
-                        width: 80,
-                        child: status ? CircularProgressIndicator() : Image.asset("lib/assets/image/camera.png"),
-                      ),
-                    ),
-                  ),
-                  object ?
-                  Positioned(
-                    left: (MediaQuery.of(context).size.width * 0.2) - 40,
-                    bottom: 5,
-                    child: GestureDetector(
-                      onTap: (){
-                        arObjectManager.removeNode(localObjectNode!);
-                        localObjectNode = null;
-                        setState(() {
-                          object = false;
-                        });
-                      },
-                      child: SizedBox(
-                        height: 80,
-                        width: 80,
-                        child: Image.asset("lib/assets/image/remove.png"),
-                      ),
-                    ),
-                  ) :
-                  Container(),
-                  object ?
-                  Positioned(
-                      left: (MediaQuery.of(context).size.width * 0.8) - 40,
-                      bottom: 5,
-                      child: InkWell(
-                        onTap: () async{
-                          _capture();
-                        },
-                        child: SizedBox(
-                          width: 80,
-                          height: 80,
-                          child: Image.asset("lib/assets/image/screenshot.png"),
-                        ),
-                      )
-                  ) :
-                  Container()
-                ],
+              Expanded(
+                child: ElevatedButton(
+                    onPressed: onLocalObjectButtonPressed,
+                    child: const Text("Add / Remove Object")),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                child: ElevatedButton(
+                    onPressed:  onWebObjectAtButtonPressed,
+                    child: const Text("Add / Remove Web Object")),
               ),
             ],
           ),
-        ),
+        ],
       ),
     );
-  }
-
-  Future<String> saveImage(Uint8List bytes) async{
-    await [Permission.storage].request();
-    final time = DateTime.now().toIso8601String().replaceAll(".", "-").replaceAll(":", "-");
-    final name = "TravelAr$time";
-    final result = await ImageGallerySaver.saveImage(bytes,name: name);
-    return result['filePath'];
   }
 
   void onARViewCreated(
@@ -159,6 +76,7 @@ class _objectViewState extends State<objectView> {
       ARLocationManager arLocationManager) {
     this.arSessionManager = arSessionManager;
     this.arObjectManager = arObjectManager;
+
     this.arSessionManager.onInitialize(
       showFeaturePoints: false,
       showPlanes: true,
@@ -169,23 +87,36 @@ class _objectViewState extends State<objectView> {
     this.arObjectManager.onInitialize();
   }
 
-  Future<void> onLocalObjectButtonPressed(name) async {
-    setState(() {
-      status = true;
-    });
-    var newNode = ARNode(
-        type: NodeType.localGLTF2,
-        uri: name,
-        scale: Vector3(0.2, 0.2, 0.2),
-        position: Vector3(0,0,0),
-        rotation: Vector4(1.0, 0.0, 0.0, 0.0));
-    bool? didAddLocalNode = await arObjectManager.addNode(newNode);
-    localObjectNode = (didAddLocalNode!) ? newNode : null;
-    setState(() {
-      status = false;
-      if(localObjectNode != null){
-        object = true;
-      }
-    });
+  Future<void> onLocalObjectButtonPressed() async {
+    if (localObjectNode != null) {
+      arObjectManager.removeNode(localObjectNode!);
+      localObjectNode = null;
+    } else {
+      var newNode = ARNode(
+          type: NodeType.localGLTF2,
+          uri: "lib/assets/heart/heart.gltf",
+          scale: Vector3(0, 0, 0),
+          position: Vector3(0.0, 0.0, 0.0),
+          rotation: Vector4(1.0, 0.0, 0.0, 0.0));
+      bool? didAddLocalNode = await arObjectManager.addNode(newNode);
+      localObjectNode = (didAddLocalNode!) ? newNode : null;
+    }
+  }
+
+  Future<void> onWebObjectAtButtonPressed() async {
+    if (webObjectNode != null) {
+      arObjectManager.removeNode(webObjectNode!);
+      webObjectNode = null;
+    } else {
+      var newNode = ARNode(
+          type: NodeType.webGLB,
+          uri:
+          // "https://github.com/KhronosGroup/glTF-Sample-Models/raw/master/2.0/2CylinderEngine/glTF-Binary/2CylinderEngine.glb",
+          "https://firebasestorage.googleapis.com/v0/b/newsapp-49d4e.appspot.com/o/image%2Funtitled.glb?alt=media&token=9307d023-edd3-4976-8615-2454625eea01",
+          // "https://github.com/Muthuram05/AR-Flutter/blob/main/arvr.glb",
+          scale: Vector3(0.2, 0.2, 0.2));
+      bool? didAddWebNode = await arObjectManager.addNode(newNode);
+      webObjectNode = (didAddWebNode!) ? newNode : null;
+    }
   }
 }

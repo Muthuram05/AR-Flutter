@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:travel_ar/assets_page/objectMap.dart';
 
 
 class MapSample extends StatefulWidget {
@@ -180,10 +181,16 @@ class MapSampleState extends State<MapSample> {
          Positioned(
            right: 20,
              top: 30,
-             child: Container(
-               color: Colors.red,
-               height: 30,
-               width: 30,
+             child: GestureDetector(
+               onTap: (){
+                 Navigator.push(context,MaterialPageRoute(builder: (context)=>objectMap()));
+               },
+               child: Container(
+                 color: Colors.red,
+                 height: 30,
+                 width: 30,
+                 child: Icon(Icons.satellite),
+               ),
              )
          )
       ]

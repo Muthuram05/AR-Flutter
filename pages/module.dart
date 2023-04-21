@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../assets_page/objectMap.dart';
+import '../assets_page/objectView.dart';
 
 
 class module extends StatelessWidget {

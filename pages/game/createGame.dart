@@ -64,18 +64,15 @@ class _createGameState extends State<createGame> {
                   right: 10,
                     child: GestureDetector(
                       onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=> CreatePage()));
+                        Navigator.pop(context);
                       },
                         child: Icon(Icons.cancel_rounded,color: Color(0xFFffffff),size: 36,))
                 ),
-
               Positioned(
                   bottom: 20,
                   left: 10,
                   child: GestureDetector(
-                    onTap: () async {
-                       shareGame();
-                      },
+                    onTap: shareGame,
                       child: Icon(Icons.share,color: Color(0xFFffffff),size: 36,))
               ),
               Positioned(
@@ -135,7 +132,8 @@ class _createGameState extends State<createGame> {
       ),
     );
   }
-  shareGame() async{
+  Future shareGame() async{
+    print("started");
     final urlImage = 'https://firebasestorage.googleapis.com/v0/b/newsapp-49d4e.appspot.com/o/image%2Fapp_logo.png?alt=media&token=b134fd80-0717-4703-b08e-2df7976a7073';
     final url = Uri.parse(urlImage);
     final response = await http.get(url);
@@ -143,6 +141,7 @@ class _createGameState extends State<createGame> {
     final temp = await getTemporaryDirectory();
     final path = '${temp.path}/image.jpg';
     await Share.shareXFiles([XFile('${temp.path}/image.jpg')],text:"New Game is Available ${widget.gameName!}");
+    print(widget.gameName);
   }
 
   void onARViewCreated(
