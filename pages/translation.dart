@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:google_ml_kit/google_ml_kit.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:translator/translator.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:google_ml_kit/google_ml_kit.dart';
 
 class translation extends StatefulWidget {
   const translation({Key? key}) : super(key: key);
@@ -74,158 +74,106 @@ class _translationState extends State<translation> {
   String language = "ta";
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.fromLTRB(0,100, 0, 0),
-          child: Column(
-            children: [
-             Padding(
-               padding: EdgeInsets.fromLTRB(60, 20, 50, 30),
-               child: Row(
-                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                 children: [
-                   Text("English", style: TextStyle(
-                     fontFamily: 'MontserratAlternates',
-                     color: Colors.grey,
-                     fontSize: 15,
-                   ),),
-                   Icon(Icons.compare_arrows_rounded),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+         Row(
+           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+           children: [
+             Text("English", style: TextStyle(
+               fontFamily: 'MontserratAlternates',
+               color: Colors.grey,
+               fontSize: 15,
+             ),),
+             Icon(Icons.compare_arrows_rounded),
 
-                   DropdownButton(
+             DropdownButton(
+               // Initial Value
+               value: dropdownvalue,
 
-                     // Initial Value
-                     value: dropdownvalue,
+               // Down Arrow Icon
+               icon: const Icon(Icons.keyboard_arrow_down),
 
-                     // Down Arrow Icon
-                     icon: const Icon(Icons.keyboard_arrow_down),
+               // Array list of items
+               items: items.map((String items) {
+                 return DropdownMenuItem(
+                   value: items,
+                   child: Text(items),
+                 );
+               }).toList(),
+               // After selecting the desired option,it will
+               // change button value to selected value
+               onChanged: (String? newValue) {
+                 setState(() {
+                   dropdownvalue = newValue!;
+                   if(newValue == "Telugu"){
+                     language = "te";
+                   }
+                   if(newValue == "Hindhi"){
+                     language = "te";
+                   }
+                   if(newValue == "Malayalam"){
+                     language = "ml";
+                   }
+                   if(newValue == "Kannada"){
+                     language = "kn";
+                   }
 
-                     // Array list of items
-                     items: items.map((String items) {
-                       return DropdownMenuItem(
-                         value: items,
-                         child: Text(items),
-                       );
-                     }).toList(),
-                     // After selecting the desired option,it will
-                     // change button value to selected value
-                     onChanged: (String? newValue) {
-                       setState(() {
-                         dropdownvalue = newValue!;
-                         if(newValue == "Telugu"){
-                           language = "te";
-                         }
-                         if(newValue == "Hindhi"){
-                           language = "te";
-                         }
-                         if(newValue == "Malayalam"){
-                           language = "ml";
-                         }
-                         if(newValue == "Kannada"){
-                           language = "kn";
-                         }
-
-                       });
-                     },
-                   ),
-                 ],
-               ),
+                 });
+               },
              ),
-              if(textScanning)
-                CircularProgressIndicator(),
-              if(!textScanning && imageFile == null)
-              Card(
-                color: Color(0xff7ec7c0),
-                child: SizedBox(
-                  width: 250,
-                  height: 250,
-                   child:
-                   Icon(Icons.camera_alt_outlined,color: Colors.white,size: 40,),
-                ),
-              ),
+           ],
+         ),
+          if(textScanning)
+            CircularProgressIndicator(),
+          if(!textScanning && imageFile == null)
+          Card(
+            color: Color(0xff7ec7c0),
+            child: SizedBox(
+              width: 250,
+              height: 250,
+               child:
+               Icon(Icons.camera_alt_outlined,color: Colors.white,size: 40,),
+            ),
+          ),
 
-              if(imageFile != null)
-                Card(
-                  color: Color(0xff7ec7c0),
-                  child: SizedBox(
-                    width: 250,
-                    height: 250,
-                    child: Center(
-                      child: Image.file(File(imageFile!.path))
-                    ),
-                  ),
-                ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(50, 20, 20, 30),
-                child: Row(
-                  children: [
-                    Card(
-                      color: Color(0xffFFB319),
-                      child: InkWell(
-                        child: SizedBox(
-                          width: 250,
-                          height: 50,
-                          child:Center(
-                            child: Text("Click hear", style: TextStyle(
-                              fontFamily: 'MontserratAlternates',
-                              color: Colors.white,
-                              fontSize: 20,
-                            ),),
-                          ),
-                        ),
-                        onTap: (){
-                          getImage(language);
-                          },
-                      ),
-                    ),
-                    // Card(
-                    //   color: Colors.grey,
-                    //   child: InkWell(
-                    //     child: SizedBox(
-                    //       width: 125,
-                    //       height: 50,
-                    //     ),
-                    //   ),
-                    // ),
-                  ],
+          if(imageFile != null)
+            Card(
+              color: Color(0xff7ec7c0),
+              child: SizedBox(
+                width: 250,
+                height: 250,
+                child: Center(
+                  child: Image.file(File(imageFile!.path))
                 ),
               ),
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                padding:EdgeInsets.fromLTRB(50, 0, 30, 0),
-                child: Text(
-                  outputText,
-                  style: TextStyle(fontSize: 20),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Card(
-                color: Color(0xffFFE194),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(100),
-                ),
-                child: InkWell(
-                  onTap: (){
-                    Navigator.pop(context);
-                  },
-                  child: SizedBox(
-                    width: 50,
-                    height: 50,
-                    child: Icon(Icons.arrow_back_ios_new),
-                  ),
-                )
-              ),
-              SizedBox(
-                height: 60,
-              ),
-            ],
-          )
-        ),
-      ),
+            ),
+          SizedBox(height: 10,),
+          ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  primary: Color(0xffFFB319),
+                  padding: EdgeInsets.symmetric(horizontal: 34, vertical: 10),
+                  textStyle: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold)),
+              onPressed: (){
+            getImage(language);
+            }, child: Text("Click Me")),
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+            padding:EdgeInsets.fromLTRB(50, 0, 30, 0),
+            child: Text(
+              outputText,
+              style: TextStyle(fontSize: 20),
+            ),
+          ),
+          SizedBox(
+            height: 60,
+          ),
+        ]
     );
   }
 }

@@ -140,7 +140,7 @@ class _createGameState extends State<createGame> {
     final bytes = response.bodyBytes;
     final temp = await getTemporaryDirectory();
     final path = '${temp.path}/image.jpg';
-    await Share.shareXFiles([XFile('${temp.path}/image.jpg')],text:"New Game is Available ${widget.gameName!}");
+    await Share.share('check out my website https://youtube.com/ \n New Game is Available ${widget.gameName!}');
     print(widget.gameName);
   }
 

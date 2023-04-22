@@ -1,184 +1,122 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'pages.dart';
 
+final user = FirebaseAuth.instance.currentUser!;
+var email = user.email?.split('@');
+final emailMap = email?.asMap();
  class homepage extends StatelessWidget {
-    const homepage({Key? key}) : super(key: key);
+   homepage({Key? key}) : super(key: key);
+
    @override
    Widget build(BuildContext context) {
-
-     return Scaffold(
-       body:
-       Container(child:
-         Column(
-           mainAxisAlignment: MainAxisAlignment.center,
-           children: [
-             // Navbar Tittle
-             Padding(
-               padding: EdgeInsets.fromLTRB(40.0, 0.0, 50.0,20.0),
-               child: Row(
-                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                 children: [
-                   Center(
-                     child: Text("TravelAR", style: TextStyle(
-                         fontFamily: 'MontserratAlternates',
-                         fontWeight:FontWeight.bold,
-                         color: Color(0xffFFB319),
-                       fontSize: 35,
-                     ),),
-                   ),
-
-                   Padding(
-                     padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                     child: SizedBox(
-                       width: 50,
-                       height: 50,
-                       child:Image.asset("lib/assets/image/travelAR_logo.png"),
-                     ),
-                   )
-                 ],
-               ),
-             ),
-             Padding(
-               padding: EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 30.0),
-               child: Card(
-                 color: Color(0xff7ec7c0),
-                 child:
-                 InkWell(
-                   onTap: (){},
-                   child: Container(
-                     width: 290,
-                     height: 140,
-                       decoration: BoxDecoration(
-                         image: DecorationImage(
-                           image: AssetImage("lib/assets/image/tourist_guide.jpeg"),
-                             fit: BoxFit.cover,
-                         )
-                       ),
-                   ),
-                 ),
-               ),
-             ),
-             // Subtittle
-              Row(
-               children:[
-                 Padding(
-                 padding: EdgeInsets.fromLTRB(50.0, 10.0, 50.0, 0.0),
-                 child: Text("Explore" , style: TextStyle(
-                   fontFamily: "JosefinSans",
-                   fontSize: 28,
-                   color: Color(0xffFFB319),
-                 ),),
-               ),
-            ],
-             ),
-
-
-            // Card boxes
-             SingleChildScrollView(
-               scrollDirection: Axis.horizontal,
-               child: Padding(
-                   padding: EdgeInsets.fromLTRB(40.0, 20.0, 50.0, 10.0),
-                 child: Row(
-                   mainAxisAlignment: MainAxisAlignment.spaceAround,
+     return DefaultTabController(
+       length: 3,
+       child: Scaffold(
+         body:  Container(child:
+           Padding(
+             padding: const EdgeInsets.symmetric(horizontal: 20),
+             child: Column(
+               crossAxisAlignment: CrossAxisAlignment.start,
+               children: [
+                 SizedBox(height: 45,),
+                 Row(
+                   crossAxisAlignment: CrossAxisAlignment.center,
+                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                    children: [
-                     Column(
-                       children: [
-
-                         //Camera
-                         Card(
-                           color: Color(0xffFFE194),
-                           child:
-                           InkWell(
-                             onTap: (){
-                               Navigator.push(
-                               context,
-                               MaterialPageRoute(builder: (context) =>  module()),);
-                               },
-                             child: SizedBox(
-                               width: 120,
-                               height: 100,
-                               child:Container(
-                                 decoration: BoxDecoration(
-                                   image: DecorationImage(
-                                     image: AssetImage("lib/assets/image/camera_img.png"),
-                                   )
-                                 ),
-                               ),
-
-                             ),
-                           ),
-                         ),
-                         SizedBox(height: 15,),
-                         Card(
-                           color: Color(0xff7ec7c0),
-                           child:
-                           InkWell(
-                             onTap: (){
-                               Navigator.push(
-                                 context,
-                                 MaterialPageRoute(builder: (context) =>  MapSample()),);
-                             },
-                             child: SizedBox(
-                               width: 120,
-                               height: 100,
-                               child:Container(
-                                 decoration: BoxDecoration(
-                                     image: DecorationImage(
-                                       image: AssetImage("lib/assets/image/guide_icon.png"),
-                                     )
-                                 ),
-                               ),
-                             ),
-                           ),
-                         ),
-                       ],
+                     Text("Hi ${emailMap?[0]}!".toUpperCase(),style: TextStyle(
+                         fontSize: 18,
+                         fontWeight: FontWeight.w300
+                     ),),
+                     CircleAvatar(
+                       backgroundColor: Colors.transparent,
+                       backgroundImage: AssetImage("lib/assets/image/travelAR_logo.png"),
+                     )
+                   ],
+                 ),
+                 SizedBox(height: 8,),
+                 Text("Let's Start",style: TextStyle(
+                   fontSize: 30,
+                   fontWeight: FontWeight.w500
+                 ),
+                 ),
+                 Row(
+                   children: [
+                     Text("your",style: TextStyle(
+                         fontSize: 30,
+                         fontWeight: FontWeight.w500
+                     ),),
+                     Text("Travel !", style: TextStyle(
+                       fontFamily: 'MontserratAlternates',
+                       fontWeight:FontWeight.bold,
+                       color: Color(0xffFFB319),
+                       fontSize: 35,
                      ),
-                     Padding(
-                       padding: EdgeInsets.only(left: 5),
-                       child: Card(
-                         color: Color(0xff7ec7c0),
-                         child:
-                         InkWell(
-                           onTap: (){
-                             Navigator.push(
-                               context,
-                               MaterialPageRoute(builder: (context) =>game()),);
-                           },
-                           child: SizedBox(
-                             width: 114,
-                             height: 230,
-                             child:Center(
-                               child: Image.asset("lib/assets/image/gamepad.png"),
-                             ),
-                           ),
+                     ),
+                   ],
+                 ),
+                 SizedBox(height: 8,),
+                 Row(
+                   children: [
+                     Container(
+                       height: 35,
+                       width: 35,
+                       color: Colors.orange,
+                       child: Image.asset("lib/assets/image/app_logo.png"),
+                     )
+                   ],
+                 ),
+                 TabBar(
+                   indicatorColor: Colors.teal.shade300,
+                   labelColor: Colors.orange, //<-- selected text color
+                   unselectedLabelColor: Colors.black, //<-- Unselected text color
+                   labelStyle: TextStyle(fontSize: 22.0,color: Colors.orange),  //For Selected tab
+                   unselectedLabelStyle: TextStyle(fontSize: 16.0,color: Colors.black),
+                   tabs: [
+                     Tab(
+                       child: Text(
+                         "Trend",
+                         style: TextStyle(fontWeight: FontWeight.w500),
+                       ),
+                     ),
+                     Tab(
+                       child: FittedBox(
+                         child: Text(
+                           "Translator",style: TextStyle(fontWeight: FontWeight.w500),
                          ),
+                       ),
+                     ),
+                     Tab(
+                       child: Text(
+                         "Top",style: TextStyle(fontWeight: FontWeight.w500),
                        ),
                      ),
                    ],
                  ),
-               ),
-             ),
-             Card(
-               color: Color(0xffFFE194),
-               child:
-               InkWell(
-                 onTap: (){
-                   Navigator.push(
-                     context,
-                     MaterialPageRoute(builder: (context) => translation()),);
-                 },
-                 child: SizedBox(
-                   width: 250,
-                   height: 100,
-                   child:Center(
-                     child:Image.asset("lib/assets/image/language.png"),
+                 SizedBox(
+                   height: 500,
+                   child:TabBarView(
+                     children: [
+                       Center(
+                         child: Icon(Icons.confirmation_num_sharp)
+                       ),
+                       Center(
+                         child: translation()
+                       ),
+                       Center(
+                         child: Icon(Icons.alarm),
+                       )
+                     ],
                    ),
                  ),
-               ),
+             // Navigator.push(
+             //   context,
+             //   MaterialPageRoute(builder: (context) => translation()),);
+               ],
              ),
-           ],
-         )
-         ),
+           )
+           ),
+       ),
      );
    }
  }
