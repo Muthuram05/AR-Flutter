@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:travel_ar/assets_page/objectMap.dart';
 import 'pages.dart';
 
 final user = FirebaseAuth.instance.currentUser!;
@@ -57,15 +58,48 @@ final emailMap = email?.asMap();
                  ),
                  SizedBox(height: 8,),
                  Row(
+                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                   crossAxisAlignment: CrossAxisAlignment.center,
                    children: [
                      Container(
-                       height: 35,
-                       width: 35,
-                       color: Colors.orange,
-                       child: Image.asset("lib/assets/image/app_logo.png"),
-                     )
+                         decoration: BoxDecoration(
+                             color: Color(0xffc9e6e5),
+                             borderRadius: BorderRadius.all(Radius.circular(5))
+                         ),
+                       height: 50,
+                       width: 50,
+                       child: Icon(Icons.location_on_outlined,size: 36,color: Color(0xff088f8a),)
+                     ),
+                     Container(
+                         decoration: BoxDecoration(
+                             color: Color(0xffc9e6e5),
+                             borderRadius: BorderRadius.all(Radius.circular(5))
+                         ),
+                       height: 50,
+                       width: 50,
+                       child: Icon(Icons.camera_enhance,size: 36,color:Color(0xff088f8a),)
+                     ),
+                     Container(
+                         decoration: BoxDecoration(
+                             color: Color(0xffc9e6e5),
+                             borderRadius: BorderRadius.all(Radius.circular(5))
+                         ),
+                       height: 50,
+                       width: 50,
+                       child: Icon(Icons.phone_android,size: 36,color:  Color(0xff088f8a),)
+                     ),
+                     Container(
+                         decoration: BoxDecoration(
+                             color: Color(0xffc9e6e5),
+                             borderRadius: BorderRadius.all(Radius.circular(5))
+                         ),
+                       height: 50,
+                       width: 50,
+                       child:Icon(Icons.gamepad,size: 36,color: Color(0xff088f8a),)
+                     ),
                    ],
                  ),
+
                  TabBar(
                    indicatorColor: Colors.teal.shade300,
                    labelColor: Colors.orange, //<-- selected text color

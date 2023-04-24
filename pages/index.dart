@@ -13,7 +13,7 @@ class IndexPage extends StatefulWidget {
 class _IndexPageState extends State<IndexPage> {
   int index = 2;
   final item = <Widget>[
-    Icon(Icons.gamepad_outlined),
+    Icon(Icons.videogame_asset),
     Icon(Icons.camera_enhance_rounded),
     Icon(Icons.home),
     Icon(Icons.location_on_outlined),

@@ -124,77 +124,70 @@ class MapSampleState extends State<MapSample> {
       body: currentLocation == null ?
         Center(child: const Text("Loading...."))
           : fin == LatLng(0,0) ? Center(child: Text("Enter Place or This place not Register for Now "))
-     : Stack(
-       children:[ GoogleMap(
-            initialCameraPosition: CameraPosition(
-                target: LatLng(currentLocation!.latitude!,currentLocation!.longitude!),
-                zoom: 10
-            ),
-            buildingsEnabled: true,
-            indoorViewEnabled: true,
-            polylines: {
-              Polyline(
-                polylineId: PolylineId('1'),
-                points:[LatLng(currentLocation!.latitude!,currentLocation!.longitude!),fin,fin2,fin3,fin4],
-                color: Colors.orange,
-                width: 4
-              )
-            },
-            markers:{
-              Marker(
-                  markerId: MarkerId("1"),
-                  position: fin,
-                  infoWindow: InfoWindow(
-                      title: 'Destination1'
-                  )
-              ),
-              Marker(
-                  markerId: MarkerId("2"),
-                  position: fin2,
-                  infoWindow: InfoWindow(
-                      title: 'Destination2'
-                  )
-              ),
-              Marker(
-                  markerId: MarkerId("3"),
-                  position: fin3,
-                  infoWindow: InfoWindow(
-                      title: 'Destination2'
-                  )
-              ),
-              Marker(
-                  markerId: MarkerId("4"),
-                  position: fin4,
-                  infoWindow: InfoWindow(
-                      title: 'Destination2'
-                  )
-              ),
-              Marker(
-                  markerId: MarkerId("me"),
-                  position: LatLng(currentLocation!.latitude!,currentLocation!.longitude!),
-                  infoWindow: InfoWindow(
-                      title: 'You are Here'
-                  )
-              ),
-            },
-          ),
-         Positioned(
-           right: 20,
-             top: 30,
-             child: GestureDetector(
-               onTap: (){
-                 Navigator.push(context,MaterialPageRoute(builder: (context)=>objectMap()));
-               },
-               child: Container(
-                 color: Colors.red,
-                 height: 30,
-                 width: 30,
-                 child: Icon(Icons.satellite),
-               ),
-             )
-         )
-      ]
-     )
+     : Column(
+       children: [
+         SizedBox(
+           height: 5,
+         ),
+         Container(
+           height: 620,
+           child: GoogleMap(
+                  initialCameraPosition: CameraPosition(
+                      target: LatLng(currentLocation!.latitude!,currentLocation!.longitude!),
+                      zoom: 10
+                  ),
+                  buildingsEnabled: true,
+                  indoorViewEnabled: true,
+                  polylines: {
+                    Polyline(
+                      polylineId: PolylineId('1'),
+                      points:[LatLng(currentLocation!.latitude!,currentLocation!.longitude!),fin,fin2,fin3,fin4],
+                      color: Colors.orange,
+                      width: 4
+                    )
+                  },
+                  markers:{
+                    Marker(
+                        markerId: MarkerId("1"),
+                        position: fin,
+                        infoWindow: InfoWindow(
+                            title: 'Destination1'
+                        )
+                    ),
+                    Marker(
+                        markerId: MarkerId("2"),
+                        position: fin2,
+                        infoWindow: InfoWindow(
+                            title: 'Destination2'
+                        )
+                    ),
+                    Marker(
+                        markerId: MarkerId("3"),
+                        position: fin3,
+                        infoWindow: InfoWindow(
+                            title: 'Destination2'
+                        )
+                    ),
+                    Marker(
+                        markerId: MarkerId("4"),
+                        position: fin4,
+                        infoWindow: InfoWindow(
+                            title: 'Destination2'
+                        )
+                    ),
+                    Marker(
+                        markerId: MarkerId("me"),
+                        position: LatLng(currentLocation!.latitude!,currentLocation!.longitude!),
+                        infoWindow: InfoWindow(
+                            title: 'You are Here'
+                        )
+                    ),
+                  },
+           ),
+         ),
+       ],
+     ),
+
     );
   }
 }

@@ -72,7 +72,7 @@ class module extends StatelessWidget {
                       color: Color(0xff7ec7c0),
                       child:InkWell(
                         onTap: (){
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=>objectView(name:"lib/assets/free__burj_khalifa_dubai/scene.gltf" ,)));
+                          Navigator.push(context,MaterialPageRoute(builder: (context)=>objectView(name:"lib/assets/mapclg/ROAD.gltf" ,)));
                         },
                         child: SizedBox(
                             height: 150,
