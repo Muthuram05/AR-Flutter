@@ -61,21 +61,22 @@ class _createGameState extends State<createGame> {
   }
   Future save() async{
     log("started");
-    var url = "https://artravelar.000webhostapp.com/index.php";
+    print(latList);
+    print(latList[0].toString());
+    var url = "https://artravelar.000webhostapp.com/insert.php";
     var response = await http.post(Uri.parse(url),body : {
       "name" : widget.gameName,
-      "place1lat" : latList[0].toString(),
-      "place1lng" :lonList[0].toString(),
-      "place2lat" : latList[1].toString(),
-      "place2lng" : lonList[1].toString(),
-      "place3lat" : latList[2].toString(),
-      "place3lng" : lonList[2].toString(),
-      "place4lat" : latList[3].toString(),
-      "place4lng" : lonList[3].toString(),
-      "place5lat" : latList[4].toString(),
-      "place5lng" : lonList[4].toString(),
+      "plc1lat" : latList[0].toString(),
+      "plc1lng" : lonList[0].toString(),
+      "plc2lat" : latList[1].toString(),
+      "plc2lng" : lonList[1].toString(),
+      "plc3lat" : latList[2].toString(),
+      "plc3lng" : lonList[2].toString(),
+      "plc4lat" : latList[3].toString(),
+      "plc4lng" : lonList[3].toString(),
+      "plc5lat" : latList[4].toString(),
+      "plc5lng" : lonList[4].toString(),
     });
-    if(response.body.isNotEmpty) {
       var data = json.decode(response.body);
       if(data == "Error"){
         Fluttertoast.showToast(
@@ -94,12 +95,13 @@ class _createGameState extends State<createGame> {
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.BOTTOM,
             timeInSecForIosWeb: 1,
-            backgroundColor: Colors.red,
+            backgroundColor: Colors.green,
             textColor: Colors.white,
             fontSize: 16.0
         );
+        Navigator.pop(context);
       }
-    }
+
   }
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,9 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import '../../testing/test.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart' as http;
 import 'startGame.dart';
 
 class startPage extends StatefulWidget {
@@ -10,6 +14,39 @@ class startPage extends StatefulWidget {
 }
 
 class _startPageState extends State<startPage> {
+  var name = "";
+  late double p1t,p1g,p2t,p2g,p3t,p3g,p4t,p4g,p5t,p5g;
+  Future retrieve() async{
+    log("started");
+    var url = "https://artravelar.000webhostapp.com/retrive.php";
+    var response = await http.post(Uri.parse(url),body : {
+      "name" : registerController.text,
+    });
+    if(response.body.isNotEmpty) {
+      var data = json.decode(response.body);
+      if(data == "Error"){
+        Fluttertoast.showToast(
+            msg:"Invalid Game",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0
+        );
+      }
+      else{
+        setState(() {
+          name = data[0]['name'];
+
+        });
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => startgame(
+              name: name,
+        )));
+      }
+    }
+  }
   final formKey = GlobalKey<FormState>();
   final registerController = TextEditingController();
   @override
@@ -40,8 +77,7 @@ class _startPageState extends State<startPage> {
                     FocusScope.of(context).unfocus();
                     final isValid = formKey.currentState!.validate();
                     if(!isValid) return;
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => startGame()));
+                    retrieve();
                   },
                   child: const Text("next")),
             ],

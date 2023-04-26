@@ -258,7 +258,7 @@ class _profileState extends State<profile> {
     uploadTask = ref.putFile(file);
     final snapshot = await uploadTask!.whenComplete(() {});
     final urlDownload = await snapshot.ref.getDownloadURL();
-    final docUser = FirebaseFirestore.instance.collection('travelar').doc(user.uid!);
+    final docUser = FirebaseFirestore.instance.collection('travelar').doc(user.uid);
     final json = {
       'profile' :urlDownload,
     };
