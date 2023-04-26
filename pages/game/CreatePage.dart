@@ -1,5 +1,10 @@
+import 'dart:convert';
+import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'createGame.dart';
+import 'package:http/http.dart' as http;
+
 
 class CreatePage extends StatefulWidget {
   const CreatePage({Key? key}) : super(key: key);
@@ -11,6 +16,34 @@ class CreatePage extends StatefulWidget {
 class _CreatePageState extends State<CreatePage> {
   final formKey = GlobalKey<FormState>();
   final registerController = TextEditingController();
+
+  Future register() async{
+    log("started");
+    var url = "https://artravelar.000webhostapp.com/index.php";
+    var response = await http.post(Uri.parse(url),body : {
+      "name" : registerController.text,
+    });
+    if(response.body.isNotEmpty) {
+      var data = json.decode(response.body);
+      if(data == "Error"){
+        Fluttertoast.showToast(
+            msg:"This Name is Exist",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0
+        );
+      }
+      if(data == "Sucess"){
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => createGame(gameName: registerController.text,)));
+      }
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,13 +67,13 @@ class _CreatePageState extends State<CreatePage> {
                   ),
                 ),
               ),
+
               ElevatedButton(
                   onPressed: () {
                     FocusScope.of(context).unfocus();
                     final isValid = formKey.currentState!.validate();
                     if(!isValid) return;
-                    Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => createGame(gameName: registerController.text,)));
+                    register();
                     },
                   child: const Text("next")),
             ],
@@ -50,3 +83,5 @@ class _CreatePageState extends State<CreatePage> {
     );
   }
 }
+
+

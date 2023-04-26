@@ -212,7 +212,7 @@ class module extends StatelessWidget {
                       color: Color(0xff7ec7c0),
                       child:InkWell(
                         onTap: (){
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=>objectView(name: "lib/assets/wh/wh.gltf")));
+                          Navigator.push(context,MaterialPageRoute(builder: (context)=>objectView(name: "lib/assets/wh/scene.gltf")));
                         },
                         child: SizedBox(
                             height: 150,
