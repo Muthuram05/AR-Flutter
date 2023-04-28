@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:travel_ar/assets_page/objectMap.dart';
+import 'package:travel_ar/pages/scroll.dart';
 import 'pages.dart';
 
 final user = FirebaseAuth.instance.currentUser!;
@@ -12,7 +13,7 @@ final emailMap = email?.asMap();
    @override
    Widget build(BuildContext context) {
      return DefaultTabController(
-       length: 3,
+       length: 2,
        child: Scaffold(
          body:  Container(child:
            Padding(
@@ -56,7 +57,15 @@ final emailMap = email?.asMap();
                      ),
                    ],
                  ),
-                 SizedBox(height: 15,),
+                 SizedBox(height: 10,),
+                 Text("THERE IS A WORLD ELSEWHERE",style: TextStyle(
+                   fontFamily: 'MontserratAlternates',
+                   fontWeight:FontWeight.bold,
+                   color: Color(0xffFFB319),
+                   fontSize: 16,
+                  ),
+                 ),
+                 SizedBox(height: 20,),
                  TabBar(
                    indicatorColor: Colors.teal.shade300,
                    labelColor: Colors.orange, //<-- selected text color
@@ -65,9 +74,11 @@ final emailMap = email?.asMap();
                    unselectedLabelStyle: TextStyle(fontSize: 16.0,color: Colors.black),
                    tabs: [
                      Tab(
-                       child: Text(
-                         "Trend",
-                         style: TextStyle(fontWeight: FontWeight.w500),
+                       child: FittedBox(
+                         child: Text(
+                           "Most Visited",
+                           style: TextStyle(fontWeight: FontWeight.w500),
+                         ),
                        ),
                      ),
                      Tab(
@@ -77,36 +88,26 @@ final emailMap = email?.asMap();
                          ),
                        ),
                      ),
-                     Tab(
-                       child: Text(
-                         "Top",style: TextStyle(fontWeight: FontWeight.w500),
-                       ),
-                     ),
                    ],
                  ),
                  SizedBox(
                    height: 500,
                    child:TabBarView(
+                     physics: const NeverScrollableScrollPhysics(),
                      children: [
                        Center(
-                         child: Icon(Icons.confirmation_num_sharp)
+                         child: Scroll(),
                        ),
                        Center(
                          child: translation()
                        ),
-                       Center(
-                         child: Icon(Icons.alarm),
-                       )
                      ],
                    ),
                  ),
-             // Navigator.push(
-             //   context,
-             //   MaterialPageRoute(builder: (context) => translation()),);
                ],
              ),
            )
-           ),
+         ),
        ),
      );
    }

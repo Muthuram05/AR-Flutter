@@ -233,7 +233,6 @@ class _profileState extends State<profile> {
         name = User.fromJson(snapshop.data()!).name;
         phone = User.fromJson(snapshop.data()!).contact;
       });
-
       return User.fromJson(snapshop.data()!);
     }
   }

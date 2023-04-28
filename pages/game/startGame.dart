@@ -65,12 +65,14 @@ class startgameState extends State<startgame> {
           p5t =  double.parse(data[0]['place5lat']);
           p5g =  double.parse(data[0]['place5lng']);
         });
+        print("${p1t},${p2t},${p3t},${p4t},${p5t}");
       }
     }
   }
   @override
   void initState(){
     super.initState();
+    getIcons();
     location();
     retrieve();
   }
@@ -78,11 +80,24 @@ class startgameState extends State<startgame> {
   void dispose() {
     super.dispose();
   }
-
+  late BitmapDescriptor icon;
+  late BitmapDescriptor destination;
+  getIcons() async {
+    var icon = await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(devicePixelRatio: 3.2),
+        "lib/assets/image/you.png");
+    var destination = await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(devicePixelRatio: 3.2),
+        "lib/assets/image/destination.png");
+    setState(() {
+      this.icon = icon;
+      this.destination = destination;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: p1t == 0 ? Center(child: Text("Loading...")): Column(
+      body: p1t == 0 ? Center(child: Text("Loading...")) : Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -102,11 +117,12 @@ class startgameState extends State<startgame> {
                 Polyline(
                     polylineId: PolylineId('1'),
                     points:[
-                      LatLng(currentLocation!.latitude!,currentLocation!.longitude!),
                       LatLng(p1t, p1g),
                       LatLng(p2t, p2g),
                       LatLng(p3t, p3g),
                       LatLng(p4t, p4g),
+                      LatLng(p5t, p5g),
+                      LatLng(currentLocation!.latitude!,currentLocation!.longitude!),
                     ],
                     color: Colors.orange,
                     width: 4
@@ -118,43 +134,49 @@ class startgameState extends State<startgame> {
                     position: LatLng( p1t, p1g),
                     infoWindow: InfoWindow(
                         title: 'Destination1'
-                    )
+                    ),
+                  icon: destination
                 ),
                 Marker(
                     markerId: MarkerId("2"),
                     position: LatLng( p2t, p2g) ,
                     infoWindow: InfoWindow(
                         title: 'Destination2'
-                    )
+                    ),
+                    icon: destination
                 ),
                 Marker(
                     markerId: MarkerId("3"),
                     position: LatLng( p3t, p3g),
                     infoWindow: InfoWindow(
-                        title: 'Destination2'
-                    )
+                        title: 'Destination3'
+                    ),
+                    icon: destination
                 ),
                 Marker(
                     markerId: MarkerId("4"),
                     position: LatLng( p4t, p4g),
                     infoWindow: InfoWindow(
-                        title: 'Destination2'
-                    )
+                        title: 'Destination4'
+                    ),
+                    icon: destination
                 ),
                 Marker(
                     markerId: MarkerId("4"),
                     position: LatLng( p5t, p5g),
                     infoWindow: InfoWindow(
-                        title: 'Destination2'
-                    )
+                        title: 'Destination5'
+                    ),
+                    icon: destination
                 ),
                 Marker(
                     markerId: MarkerId("me"),
                     position: LatLng(currentLocation!.latitude!,currentLocation!.longitude!),
                     infoWindow: InfoWindow(
                         title: 'You are Here'
-                    )
-                ),
+                    ),
+                    icon: icon
+                )
               },
             ),
           ),

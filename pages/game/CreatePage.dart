@@ -52,6 +52,7 @@ class _CreatePageState extends State<CreatePage> {
             Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           Column(
             children: [
+             Text("TAKE ONLY MEMORIES, LEAVE ONLY FOOTPRINTS"),
               Padding(
                 padding: EdgeInsets.all(40.0),
                 child: Form(
